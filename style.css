@@ -1,0 +1,79 @@
+/* Video container */
+.video-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 8px solid #cf8d7c; /* Cor de início do gradiente */
+    border-radius: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.video-container:hover {
+    border-color: #a77cb4; /* Cor final do gradiente */
+}
+
+/* Text container */
+.text-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Customize the message text styling */
+.message {
+    background: -webkit-gradient(linear, left top, right top, from(#cf8d7c), to(#a77cb4));
+    background: -webkit-linear-gradient(left, #cf8d7c, #a77cb4);
+    background: linear-gradient(90deg, #cf8d7c, #a77cb4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-family: sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Container for the buttons */
+.container {
+    border: 8px solid #cf8d7c; /* Cor de início do gradiente */
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+}
+
+/* Style the buttons */
+.ambiente {
+    background: #fff;
+    color: #333;
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.ambiente:hover {
+    background: #f0f0f0;
+}
+
+/* Efeitos visuais gerais */
+body {
+    background-color: #f2f2f2; /* Fundo suave */
+    font-family: sans-serif;
+    transition: background-color 0.3s ease-in-out; /* Transição suave no fundo */
+}
+
+/* Efeitos de hover mais elaborados */
+.video-container:hover {
+    border-color: #a77cb4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra mais intensa */
+}
+
+.ambiente:hover {
+    background: #f0f0f0;
+    transform: translateY(-2px); /* Leve elevação */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Sombra sutil */
+}
