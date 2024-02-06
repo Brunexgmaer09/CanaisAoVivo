@@ -1,5 +1,11 @@
 const listaAmbientes = document.querySelectorAll('.ambiente');
 const iframeVideo = document.getElementById('iframe-video');
+const body = document.querySelector('body');
+const idVideoPadrao = 'bbb'; // ID do vídeo do "Quarto Roxo"
+// Carregar o vídeo do "Quarto Roxo" por padrão
+iframeVideo.src = `https://reidoscanais.com/embed/?id=${idVideoPadrao}`;
+
+body.style.backgroundColor = '#000';
 
 listaAmbientes.forEach((button) => {
     button.addEventListener('click', () => {
