@@ -72,8 +72,10 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra mais intensa */
 }
 
-.ambiente:hover {
-    background: #f0f0f0;
-    transform: translateY(-2px); /* Leve elevação */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Sombra sutil */
+body {
+  background-image: url(./fundo.jpg);
+  background-size: cover; /* Ajusta a imagem para caber dentro da tela */
+  background-position: center center; /* Posiciona a imagem no centro da tela */
+  background-attachment: fixed; /* Faz com que a imagem fique fixa e não se mova com a rolagem da página */
+  background-repeat: no-repeat; 
 }
