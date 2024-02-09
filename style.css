@@ -18,6 +18,36 @@
   margin-top: 20px;
 }
 
+:root {
+  --grad-color-1: #9b72cb; /* Cor inicial */
+  --grad-color-2: #d96570; /* Cor final */
+  --grad-color-3: #cf8d7c; /* Opcional: para gradiente com três cores */
+}
+
+/* Classe para elementos de texto em gradiente */
+.gradient-text {
+  background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3)); 
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  color: transparent;
+  font-family: sans-serif;
+  font-size: 2em; 
+  font-weight: bold; 
+}
+
+/* Classe para botões com gradiente */
+.gradient-button {
+  background: linear-gradient(to right, var(--grad-color-1), var(--grad-color-2));
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
 /* Customize the message text styling */
 .message {
   background: -webkit-gradient(linear, left top, right top, from(#cf8d7c), to(#a77cb4));
