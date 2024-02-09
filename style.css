@@ -21,8 +21,8 @@
 /* Customize the message text styling */
 .message {
   background: -webkit-gradient(linear, left top, right top, from(#cf8d7c), to(#a77cb4));
-  background: -webkit-linear-gradient(left, #cf8d7c, #a77cb4);
-  background: linear-gradient(90deg, #cf8d7c, #a77cb4);
+  background: -webkit-linear-gradient(left, #4285f4, #a77cb4);
+  background: linear-gradient(90deg, #9b72cb, #d96570);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
