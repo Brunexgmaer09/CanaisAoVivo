@@ -71,6 +71,13 @@
   width: 80%;
 }
 
+/* Style for the counter container */
+.contador-container {
+  position: fixed; /* Mantém o contador fixo na tela */
+  bottom: 20px;   /* Distância da parte inferior */
+  left: 20px;     /* Distância da esquerda */
+} 
+
 /* Style the buttons */
 .ambiente {
   /* Base styles from the given button */
