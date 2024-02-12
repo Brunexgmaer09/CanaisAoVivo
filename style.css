@@ -72,22 +72,25 @@
  cursor: pointer;
 }
 
-/* Estilo da mensagem "Pessoas Online" */
 .message {
- /* Define o gradiente linear */
- background: linear-gradient(90deg, #9b72cb, #d96570);
- /* Corta o texto com o gradiente */
- -webkit-background-clip: text;
- background-clip: text;
- /* Deixa o texto transparente para mostrar o gradiente */
- -webkit-text-fill-color: transparent;
- color: transparent;
- /* Define a fonte do texto */
- font-family: sans-serif;
- /* Tamanho da fonte */
- font-size: 1.5em;
- /* Peso da fonte */
- font-weight: bold;
+  /* Define o gradiente linear */
+  background: linear-gradient(90deg, #9b72cb, #d96570);
+  /* Corta o texto com o gradiente */
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* Deixa o texto transparente para mostrar o gradiente */
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  /* Define a fonte do texto */
+  font-family: sans-serif;
+  /* Tamanho da fonte */
+  font-size: 1.5em;
+  /* Peso da fonte */
+  font-weight: bold;
+  /* Centraliza o texto */
+  text-align: center;
+  /* Define a margem superior e inferior como 0 */
+  margin: 0 auto;
 }
 
 /* Container dos botões */
