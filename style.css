@@ -11,7 +11,7 @@
   border-radius: 40px; /* Raio da borda do container */
   /* Sombra do container */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-
+  background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
   /* Efeito de hover no container */
   &:hover {
     /* Cor da borda ao passar o mouse */
