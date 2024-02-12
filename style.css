@@ -7,7 +7,7 @@
   /* Espaçamento interno do container */
   padding: 20px;
   /* Borda do container */
-  border: 8px solid #cf8d7c; /* Cor de início do gradiente */
+  border: 8px solid var(--grad-color-1); /* Cor inicial do gradiente */
   border-radius: 40px; /* Raio da borda do container */
   /* Sombra do container */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -15,15 +15,23 @@
   /* Efeito de hover no container */
   &:hover {
     /* Cor da borda ao passar o mouse */
-    border-color: #a77cb4; /* Cor final do gradiente */
+    border-color: var(--grad-color-2); /* Cor intermediária do gradiente */
   }
+}
+
+/* Estilo do container do texto */
+.text-container {
+  /* Alinha o texto ao centro */
+  text-align: center;
+  /* Margem superior do container do texto */
+  margin-top: 20px;
 }
 
 /* Variáveis para as cores do gradiente */
 :root {
   --grad-color-1: #9b72cb; /* Cor inicial */
-  --grad-color-2: #d96570; /* Cor final */
-  --grad-color-3: #cf8d7c; /* Opcional: para gradiente com três cores */
+  --grad-color-2: #d96570; /* Cor intermediária */
+  --grad-color-3: #cf8d7c; /* Cor final */
 }
 
 /* Classe para elementos de texto com gradiente */
@@ -49,7 +57,7 @@
   /* Define o gradiente linear */
   background: linear-gradient(to right, var(--grad-color-1), var(--grad-color-2));
   /* Cor do texto do botão */
-  color: #fff;
+  color: var(--grad-color-3); /* Cor final do gradiente */
   /* Espaçamento interno do botão */
   padding: 10px 20px;
   /* Raio da borda do botão */
@@ -85,7 +93,7 @@
 /* Container dos botões */
 .container {
   /* Borda do container */
-  border: 8px solid #cf8d7c; /* Cor de início do gradiente */
+  border: 8px solid var(--grad-color-1); /* Cor inicial do gradiente */
   /* Raio da borda do container */
   border-radius: 40px;
   /* Espaçamento interno do container */
@@ -94,6 +102,8 @@
   margin: 20px auto;
   /* Largura do container */
   width: 80%;
+  /* Aplique o gradiente ao container */
+  background: linear-gradient(90deg, #9b72cb, #d96570);
 }
 
 /* Estilo do container do contador */
