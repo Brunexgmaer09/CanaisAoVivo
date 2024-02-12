@@ -73,10 +73,21 @@
 
 /* Style for the counter container */
 .contador-container {
-  position: fixed; /* Mantém o contador fixo na tela */
-  bottom: 20px;   /* Distância da parte inferior */
-  left: 20px;     /* Distância da esquerda */
-} 
+    position: fixed; /* Mantém o contador fixo na tela */
+    bottom: 20px;   /* Distância da parte inferior */
+    left: 20px;     /* Distância da esquerda */
+    text-align: center; /* Alinha o conteúdo ao centro */
+}
+
+.contador-container span {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 5px; 
+}
+
+.contador-container img {
+    height: 20px; /* Define a altura da imagem do contador */
+}
 
 /* Style the buttons */
 .ambiente {
