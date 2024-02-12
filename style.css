@@ -7,7 +7,7 @@
   /* Espaçamento interno do container */
   padding: 20px;
   /* Borda do container */
-  border: 8px solid var(--grad-color-1); /* Cor inicial do gradiente */
+  border: 8px solid #cf8d7c; /* Cor de início do gradiente */
   border-radius: 40px; /* Raio da borda do container */
   /* Sombra do container */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -15,15 +15,8 @@
   /* Efeito de hover no container */
   &:hover {
     /* Cor da borda ao passar o mouse */
-    border-color: var(--grad-color-2); /* Cor intermediária do gradiente */
+    border-color: #a77cb4; /* Cor final do gradiente */
   }
-
-/* Estilo do container do texto */
-.text-container {
-  /* Alinha o texto ao centro */
-  text-align: center;
-  /* Margem superior do container do texto */
-  margin-top: 20px;
 }
 
 /* Variáveis para as cores do gradiente */
