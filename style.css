@@ -1,7 +1,7 @@
 /* Estilo do container do vídeo */
 .video-container {
  /* Largura do container */
- width: 90%;
+ width: 100%;
  /* Margem automática para centralizar o container na tela */
  margin: 0 auto;
  /* Espaçamento interno do container */
