@@ -72,7 +72,7 @@
  cursor: pointer;
 }
 
-.author {
+.author-container {
   /* Animação do gradiente */
   animation: gradient 5s infinite linear;
 
@@ -88,6 +88,7 @@
   text-align: center;
   line-height: 1.5em;
   margin: 0.5em 0;
+  display: inline-block; /* Permite que o texto fique ao lado de outros elementos */
 }
 
 /* Definição da keyframe "gradient" */
