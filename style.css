@@ -72,6 +72,34 @@
  cursor: pointer;
 }
 
+.author {
+  /* Definição do gradiente linear com três cores: */
+  background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
+
+  /* Efeito de corte do texto com o gradiente: */
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* Transparência do texto para mostrar o gradiente: */
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  /* Personalização da fonte: */
+  font-family: sans-serif;
+  font-size: 1em; /* Tamanho padrão */
+  font-weight: bold;
+
+  /* Centralização do texto: */
+  text-align: center;
+
+  /* Espaçamento entre linhas: */
+  line-height: 1.5em; /* Opcional */
+
+  /* Margem superior e inferior: */
+  margin: 0.5em 0; /* Opcional */
+}
+
+
 .message {
   /* Define o gradiente linear */
   background: linear-gradient(90deg, #9b72cb, #d96570);
