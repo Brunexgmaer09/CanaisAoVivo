@@ -1,43 +1,118 @@
 /* Estilo do container do vídeo */
 .video-container {
-  /* Largura do container */
-  width: 100%;
-  /* Margem automática para centralizar o container na tela */
-  margin: 0 auto;
-  /* Espaçamento interno do container */
-  padding: 20px;
-  /* Borda do container */
-  border: 8px solid #cf8d7c; /* Cor de início do gradiente */
-  border-radius: 40px; /* Raio da borda do container */
-  /* Sombra do container */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+ /* Largura do container */
+ width: 100%;
+ /* Margem automática para centralizar o container na tela */
+ margin: 0 auto;
+ /* Espaçamento interno do container */
+ padding: 20px;
+ /* Borda do container */
+ border: 8px solid #cf8d7c; /* Cor de início do gradiente */
+ border-radius: 40px; /* Raio da borda do container */
+ /* Sombra do container */
+ box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 
-  /* Efeito de hover no container */
-  &:hover {
-    /* Cor da borda ao passar o mouse */
-    border-color: #a77cb4; /* Cor final do gradiente */
-  }
+ /* Efeito de hover no container */
+ &:hover {
+  /* Cor da borda ao passar o mouse */
+  border-color: #a77cb4; /* Cor final do gradiente */
+ }
 }
 
 /* Estilo do container do texto */
 .text-container {
-  /* Alinha o texto ao centro */
-  text-align: center;
-  /* Margem superior do container do texto */
-  margin-top: 20px;
+ /* Alinha o texto ao centro */
+ text-align: center;
+ /* Margem superior do container do texto */
+ margin-top: 20px;
 }
 
 /* Variáveis para as cores do gradiente */
 :root {
-  --grad-color-1: #9b72cb; /* Cor inicial */
-  --grad-color-2: #4285f4; /* Cor final */
-  --grad-color-3: #d96570; /* Opcional: para gradiente com três cores */
+ --grad-color-1: #9b72cb; /* Cor inicial */
+ --grad-color-2: #d96570; /* Cor final */
+ --grad-color-3: #cf8d7c; /* Opcional: para gradiente com três cores */
 }
 
 /* Classe para elementos de texto com gradiente */
 .gradient-text {
-  /* Define o gradiente linear */
+ /* Define o gradiente linear */
+ background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
+ /* Corta o texto com o gradiente */
+ -webkit-background-clip: text;
+ background-clip: text;
+ /* Deixa o texto transparente para mostrar o gradiente */
+ -webkit-text-fill-color: transparent;
+ color: transparent;
+ /* Define a fonte do texto */
+ font-family: sans-serif;
+ /* Tamanho da fonte */
+ font-size: 2em;
+ /* Peso da fonte */
+ font-weight: bold;
+}
+
+/* Classe para botões com gradiente */
+.gradient-button {
+ /* Define o gradiente linear */
+ background: linear-gradient(to right, var(--grad-color-1), var(--grad-color-2));
+ /* Cor do texto do botão */
+ color: #fff;
+ /* Espaçamento interno do botão */
+ padding: 10px 20px;
+ /* Raio da borda do botão */
+ border-radius: 20px;
+ /* Tamanho da fonte do botão */
+ font-size: 18px;
+ /* Peso da fonte do botão */
+ font-weight: bold;
+ /* Sem borda */
+ border: none;
+ /* Cursor para indicar que é um botão */
+ cursor: pointer;
+}
+
+.author-container {
+  /* Animação do gradiente */
+  animation: gradient 5s infinite linear;
+
+  /* Demais estilos do author */
   background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-family: sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.5em;
+  margin: 0.5em 0;
+  display: inline-block; /* Permite que o texto fique ao lado de outros elementos */
+}
+
+/* Definição da keyframe "gradient" */
+@keyframes gradient {
+  0% {
+    background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
+  }
+  25% {
+    background: linear-gradient(90deg, var(--grad-color-2), var(--grad-color-3), var(--grad-color-1));
+  }
+  50% {
+    background: linear-gradient(90deg, var(--grad-color-3), var(--grad-color-1), var(--grad-color-2));
+  }
+  75% {
+    background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
+  }
+  100% {
+    background: linear-gradient(90deg, var(--grad-color-2), var(--grad-color-3), var(--grad-color-1));
+  }
+}
+
+.message {
+  /* Define o gradiente linear */
+  background: linear-gradient(90deg, #9b72cb, #d96570);
   /* Corta o texto com o gradiente */
   -webkit-background-clip: text;
   background-clip: text;
@@ -47,159 +122,129 @@
   /* Define a fonte do texto */
   font-family: sans-serif;
   /* Tamanho da fonte */
-  font-size: 2em;
+  font-size: 1.5em;
   /* Peso da fonte */
   font-weight: bold;
-}
-
-/* Classe para botões com gradiente */
-.gradient-button {
-  /* Define o gradiente linear */
-  background: linear-gradient(to right, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
-  /* Cor do texto do botão */
-  color: #fff;
-  /* Espaçamento interno do botão */
-  padding: 10px 20px;
-  /* Raio da borda do botão */
-  border-radius: 20px;
-  /* Tamanho da fonte do botão */
-  font-size: 18px;
-  /* Peso da fonte do botão */
-  font-weight: bold;
-  /* Sem borda */
-  border: none;
-  /* Cursor para indicar que é um botão */
-  cursor: pointer;
-
-  /* Efeito de hover no botão */
-  &:hover {
-    /* Ajusta o gradiente ao passar o mouse */
-    background: linear-gradient(to right, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
-  }
-
-  /* Estilo do botão ativo */
-  &[data-state="active"] {
-    /* Ajusta o gradiente do botão ativo */
-    background: linear-gradient(to right, var(--grad-color-2), var(--grad-color-3), var(--grad-color-1));
-    /* Cor do texto do botão ativo */
-    color: #fff;
-  }
+  /* Centraliza o texto */
+  text-align: center;
+  /* Define a margem superior e inferior como 0 */
+  margin: 0 auto;
 }
 
 /* Container dos botões */
 .container {
-  /* Borda do container */
-  border: 8px solid #cf8d7c; /* Cor de início do gradiente */
-  /* Raio da borda do container */
-  border-radius: 40px;
-  /* Espaçamento interno do container */
-  padding: 20px;
-  /* Margem do container */
-  margin: 20px auto;
-  /* Largura do container */
-  width: 80%;
+ /* Borda do container */
+ border: 8px solid #cf8d7c; /* Cor de início do gradiente */
+ /* Raio da borda do container */
+ border-radius: 40px;
+ /* Espaçamento interno do container */
+ padding: 20px;
+ /* Margem do container */
+ margin: 20px auto;
+ /* Largura do container */
+ width: 80%;
 }
 
 /* Estilo do container do contador */
 .contador-container {
-  /* Posição fixa para manter o contador na tela */
-  position: fixed;
-  /* Distância da parte inferior da tela */
-  bottom: 20px;
-  /* Distância da esquerda da tela */
-  left: 20px;
-  /* Alinha o conteúdo ao centro */
-  text-align: center;
+ /* Posição fixa para manter o contador na tela */
+ position: fixed;
+ /* Distância da parte inferior da tela */
+ bottom: 20px;
+ /* Distância da esquerda da tela */
+ left: 20px;
+ /* Alinha o conteúdo ao centro */
+ text-align: center;
 }
 
 /* Estilo da mensagem "Pessoas Online" */
 .contador-container span {
-  /* Tamanho da fonte */
-  font-size: 18px;
-  /* Peso da fonte */
-  font-weight: bold;
-  /* Margem direita da mensagem */
-  margin-right: 5px;
+ /* Tamanho da fonte */
+ font-size: 18px;
+ /* Peso da fonte */
+ font-weight: bold;
+ /* Margem direita da mensagem */
+ margin-right: 5px;
 }
 
 /* Estilo da imagem do contador */
 .contador-container img {
-  /* Altura da imagem */
-  height: 20px;
+ /* Altura da imagem */
+ height: 20px;
 }
 
 /* Estilo dos botões */
 .ambiente {
-  /* Estilos base dos botões */
-  display: inline-flex;
-  align-items: center; /* Correção: 'items-center' -> 'align-items' */
-  padding: 10px 20px; /* Aumenta o espaçamento interno dos botões */
-  font-size: 18px; /* Aumenta o tamanho da fonte */
-  border-radius: 20px;
-  justify-content: center;
-  whitespace: nowrap;
-  rounded-sm;
-  px-3;
-  py-1.5;
-  text-sm;
-  font-medium;
-  transition-all;
-  focus-visible: outline-none;
-  focus-visible: ring-2;
-  focus-visible: ring-ring;
-  focus-visible: ring-offset-2;
-  disabled: pointer-events-none;
-  disabled: opacity-50;
+ /* Estilos base dos botões */
+ display: inline-flex;
+ align-items: center; /* Correção: 'items-center' -> 'align-items' */
+ padding: 10px 20px; /* Aumenta o espaçamento interno dos botões */
+ font-size: 18px; /* Aumenta o tamanho da fonte */
+ border-radius: 20px;
+ justify-content: center;
+ whitespace: nowrap;
+ rounded-sm;
+ px-3;
+ py-1.5;
+ text-sm;
+ font-medium;
+ transition-all;
+ focus-visible: outline-none;
+ focus-visible: ring-2;
+ focus-visible: ring-ring;
+ focus-visible: ring-offset-2;
+ disabled: pointer-events-none;
+ disabled: opacity-50;
 
-  /* Gradiente do botão */
-  background: linear-gradient(to right, #cf8d7c, #cf8d7c, #a77cb4);
-  /* Cor do texto do botão */
-  color: #333;
-  /* Borda do botão */
-  border: 1px solid #ddd;
+ /* Gradiente do botão */
+ background: linear-gradient(to right, #cf8d7c, #cf8d7c, #a77cb4);
+ /* Cor do texto do botão */
+ color: #333;
+ /* Borda do botão */
+ border: 1px solid #ddd;
 
-  /* Efeito de hover no botão */
-  &:hover {
-    /* Ajusta o gradiente ao passar o mouse */
-    background: linear-gradient(to right, #cf8d7c, #a77cb4, #a77cb4);
-  }
+ /* Efeito de hover no botão */
+ &:hover {
+  /* Ajusta o gradiente ao passar o mouse */
+  background: linear-gradient(to right, #cf8d7c, #a77cb4, #a77cb4);
+ }
 
-  /* Estilo do botão ativo */
-  &[data-state="active"] {
-    /* Ajusta o gradiente do botão ativo */
-    background: linear-gradient(to right, #a77cb4, #a77cb4, #cf8d7c);
-    /* Cor do texto do botão ativo */
-    color: #fff;
-  }
+ /* Estilo do botão ativo */
+ &[data-state="active"] {
+  /* Ajusta o gradiente do botão ativo */
+  background: linear-gradient(to right, #a77cb4, #a77cb4, #cf8d7c);
+  /* Cor do texto do botão ativo */
+  color: #fff;
+ }
 }
 
 /* Efeitos visuais gerais */
 body {
-  /* Cor de fundo do corpo */
-  background-color: #f2f2f2;
-  /* Fonte padrão do corpo */
-  font-family: sans-serif;
-  /* Transição suave na cor de fundo */
-  transition: background-color 0.3s ease-in-out;
+ /* Cor de fundo do corpo */
+ background-color: #f2f2f2;
+ /* Fonte padrão do corpo */
+ font-family: sans-serif;
+ /* Transição suave na cor de fundo */
+ transition: background-color 0.3s ease-in-out;
 }
 
 /* Efeito de hover mais elaborado */
 .video-container:hover {
-  /* Cor da borda ao passar o mouse */
-  border-color: #a77cb4;
-  /* Sombra mais intensa ao passar o mouse */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+ /* Cor da borda ao passar o mouse */
+ border-color: #a77cb4;
+ /* Sombra mais intensa ao passar o mouse */
+ box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Define a imagem de fundo da página */
 body {
-  background-image: url(./fundo.jpg);
-  /* Ajusta a imagem para caber na tela */
-  background-size: cover;
-  /* Posiciona a imagem no centro da tela */
-  background-position: center center;
-  /* Faz com que a imagem fique fixa e não se mova com a rolagem da página */
-  background-attachment: fixed;
-  /* Não repete a imagem */
-  background-repeat: no-repeat;
+ background-image: url(./fundo.jpg);
+ /* Ajusta a imagem para caber na tela */
+ background-size: cover;
+ /* Posiciona a imagem no centro da tela */
+ background-position: center center;
+ /* Faz com que a imagem fique fixa e não se mova com a rolagem da página */
+ background-attachment: fixed;
+ /* Não repete a imagem */
+ background-repeat: no-repeat;
 }
