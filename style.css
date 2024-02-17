@@ -30,14 +30,15 @@
 /* Variáveis para as cores do gradiente */
 :root {
  --grad-color-1: #9b72cb; /* Cor inicial */
- --grad-color-2: #d96570; /* Cor final */
- --grad-color-3: #cf8d7c; /* Opcional: para gradiente com três cores */
+ --grad-color-2: #4285f4; /* Cor final */
+ --grad-color-3: #d96570; /* Opcional: para gradiente com três cores */
+ --grad-color-4: #8ab4f8;
 }
 
 /* Classe para elementos de texto com gradiente */
 .gradient-text {
  /* Define o gradiente linear */
- background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
+ background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3)var(--grad-color-4));
  /* Corta o texto com o gradiente */
  -webkit-background-clip: text;
  background-clip: text;
@@ -55,7 +56,7 @@
 /* Classe para botões com gradiente */
 .gradient-button {
  /* Define o gradiente linear */
- background: linear-gradient(to right, var(--grad-color-1), var(--grad-color-2));
+ background: linear-gradient(to right, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3)var(--grad-color-4));
  /* Cor do texto do botão */
  color: #fff;
  /* Espaçamento interno do botão */
@@ -78,7 +79,7 @@
   font-size: 1em;
   font-weight: bold;
   color: #fff;
-  background: linear-gradient(90deg, #9b72cb, #d96570, #cf8d7c);
+  background: linear-gradient(90deg, #9b72cb, #d96570, #cf8d7c), #8ab4f8);
   -webkit-background-clip: text;
   background-clip: text;
   display: inline-block;
@@ -103,7 +104,7 @@
 
 .message {
   /* Define o gradiente linear */
-  background: linear-gradient(90deg, #9b72cb, #d96570);
+  background: linear-gradient(90deg, #9b72cb, #d96570), #8ab4f8);
   /* Corta o texto com o gradiente */
   -webkit-background-clip: text;
   background-clip: text;
@@ -188,7 +189,7 @@
  disabled: opacity-50;
 
  /* Gradiente do botão */
- background: linear-gradient(to right, #cf8d7c, #cf8d7c, #a77cb4);
+ background: linear-gradient(to right, #cf8d7c, #cf8d7c, #a77cb4), #8ab4f8);
  /* Cor do texto do botão */
  color: #333;
  /* Borda do botão */
@@ -197,7 +198,7 @@
  /* Efeito de hover no botão */
  &:hover {
   /* Ajusta o gradiente ao passar o mouse */
-  background: linear-gradient(to right, #cf8d7c, #a77cb4, #a77cb4);
+  background: linear-gradient(to right, #cf8d7c, #a77cb4, #a77cb4), #8ab4f8);
  }
 
  /* Estilo do botão ativo */
