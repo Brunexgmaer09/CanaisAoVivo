@@ -73,40 +73,31 @@
 }
 
 .author-container {
-  /* Animação do gradiente */
-  animation: gradient 5s infinite linear;
-
-  /* Demais estilos do author */
-  background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  animation: rgb-cycle 5s infinite linear;
   font-family: sans-serif;
   font-size: 1em;
   font-weight: bold;
-  text-align: center;
-  line-height: 1.5em;
+  color: #fff;
+  background: linear-gradient(90deg, #9b72cb, #d96570, #cf8d7c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  display: inline-block;
   margin: 0.5em 0;
-  display: inline-block; /* Permite que o texto fique ao lado de outros elementos */
+  line-height: 1.5em;
 }
 
-/* Definição da keyframe "gradient" */
-@keyframes gradient {
+@keyframes rgb-cycle {
   0% {
-    background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
+    color: #9b72cb;
   }
-  25% {
-    background: linear-gradient(90deg, var(--grad-color-2), var(--grad-color-3), var(--grad-color-1));
+  33% {
+    color: #d96570;
   }
-  50% {
-    background: linear-gradient(90deg, var(--grad-color-3), var(--grad-color-1), var(--grad-color-2));
-  }
-  75% {
-    background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
+  66% {
+    color: #cf8d7c;
   }
   100% {
-    background: linear-gradient(90deg, var(--grad-color-2), var(--grad-color-3), var(--grad-color-1));
+    color: #9b72cb;
   }
 }
 
