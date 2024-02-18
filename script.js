@@ -1,13 +1,12 @@
 const listaAmbientes = document.querySelectorAll('.ambiente');
 const iframeVideo = document.getElementById('iframe-video');
 const body = document.querySelector('body');
-const idVideoPadrao = 'bbb'; // ID do vídeo do "Quarto Roxo"
 
 // Adicione os IDs da Rede Globo e do Discovery HD
-const listaIds = ['bbb', 'bbb2', 'bbb4', 'bbb3', 'bbb9', 'bbb11', 'globomg-globominas', 'discoverychannel'];
+const listaIds = ['bbb', 'bbb2', 'bbb4', 'bbb3', 'bbb9', 'bbb11', 'globomg-globominas', 'discoverychannel', 'bbbmosaico'];
 
 // Carregar o vídeo do "Quarto Roxo" por padrão
-iframeVideo.src = `https://reidoscanais.com/embed/?id=${idVideoPadrao}`;
+iframeVideo.src = `https://reidoscanais.com/embed/?id=bbb`;
 
 body.style.backgroundColor = '#000';
 
@@ -38,8 +37,11 @@ listaAmbientes.forEach((button) => {
         case 'bbb11':
           iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
           break;
+        case 'bbbmosaico':
+          iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
+          break;
         default:
-          iframeVideo.src = `https://reidoscanais.com/embed/?id=${idVideoPadrao}`;
+          iframeVideo.src = `https://reidoscanais.com/embed/?id=bbb`;
       }
     }
 
@@ -52,6 +54,3 @@ listaAmbientes.forEach((button) => {
     }, 100);
   });
 });
-
-// Adicione o botão do mosaico do BBB24 ao final da lista
-listaAmbientes.push(document.querySelector('.ambiente[data-id="bbbmosaico"]'));
