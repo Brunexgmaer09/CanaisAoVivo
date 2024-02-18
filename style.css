@@ -37,7 +37,7 @@
 /* Classe para elementos de texto com gradiente */
 .gradient-text {
  /* Define o gradiente linear */
- background: linear-gradient(90deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
+ background: linear-gradient(45deg, var(--grad-color-1), var(--grad-color-2), var(--grad-color-3));
  /* Corta o texto com o gradiente */
  -webkit-background-clip: text;
  background-clip: text;
