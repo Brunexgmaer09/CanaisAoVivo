@@ -2,8 +2,8 @@ const listaAmbientes = document.querySelectorAll('.ambiente');
 const iframeVideo = document.getElementById('iframe-video');
 const body = document.querySelector('body');
 
-// Adicione os IDs da Rede Globo e do Discovery HD
-const listaIds = ['bbb', 'bbb2', 'bbb4', 'bbb3', 'bbb9', 'bbb11', 'globomg-globominas', 'discoverychannel', 'bbbmosaico'];
+// Adicione os IDs da Rede Globo, Discovery HD e o novo "Jardim"
+const listaIds = ['bbb', 'bbb2', 'bbb4', 'bbb3', 'bbb9', 'bbb11', 'globomg-globominas', 'discoverychannel', 'bbbmosaico', 'jardim'];
 
 // Carregar o vídeo do "Quarto Roxo" por padrão
 iframeVideo.src = `https://reidoscanais.com/embed/?id=bbb`;
@@ -38,6 +38,9 @@ listaAmbientes.forEach((button) => {
           iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
           break;
         case 'bbbmosaico':
+          iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
+          break;
+        case 'jardim':
           iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
           break;
         default:
