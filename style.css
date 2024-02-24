@@ -166,13 +166,11 @@
 
 .botao-inscrever {
   /* Posicionamento absoluto para permitir posicionamento personalizado */
-  background-color: #cf8d7c; /* Cor de fundo do elemento */
-  padding: 20px; /* Espaçamento interno do elemento */
+  background-color: #cf8d7c;
+  padding: 5px;
   position: absolute;
-  /* Define a distância do canto direito */
-  right: 10px;
-  /* Define a distância do canto inferior (aumente esse valor para mover para baixo) */
-  bottom: 50px;
+  right: 690px;
+  bottom: -154px;
 }
 
 /* Estilo dos botões */
