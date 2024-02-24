@@ -164,16 +164,6 @@
  height: 20px;
 }
 
-.botao-inscrever {
-  /* Posicionamento absoluto para permitir posicionamento personalizado */
-  background-color: #cf8d7c;
-  padding: 5px;
-  position: absolute;
-  max-width: 690px; /* Ou qualquer valor que você desejar */
-  bottom: -154px;
-  height: auto;
-}
-
 /* Estilo dos botões */
 .ambiente {
  /* Estilos base dos botões */
