@@ -164,14 +164,13 @@
  height: 20px;
 }
 
-/* Estilo do botão "Inscreva-se" */
 .botao-inscrever {
   /* Posicionamento absoluto para permitir posicionamento personalizado */
   position: absolute;
   /* Define a distância do canto direito */
   right: 10px;
-  /* Define a distância do canto inferior */
-  bottom: 10px;
+  /* Define a distância do canto inferior (aumente esse valor para mover para baixo) */
+  bottom: 50px;
 }
 
 /* Estilo dos botões */
