@@ -169,9 +169,9 @@
   /* Posicionamento absoluto para permitir posicionamento personalizado */
   position: absolute;
   /* Define a distância do canto direito */
-  right: 20px;
+  right: 10px;
   /* Define a distância do canto inferior */
-  bottom: 20px;
+  bottom: 10px;
 }
 
 /* Estilo dos botões */
