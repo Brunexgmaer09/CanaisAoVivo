@@ -169,8 +169,9 @@
   background-color: #cf8d7c;
   padding: 5px;
   position: absolute;
-  right: 690px;
+  max-width: 690px; /* Ou qualquer valor que você desejar */
   bottom: -154px;
+  height: auto;
 }
 
 /* Estilo dos botões */
