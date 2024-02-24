@@ -166,6 +166,8 @@
 
 .botao-inscrever {
   /* Posicionamento absoluto para permitir posicionamento personalizado */
+  background-color: #cf8d7c; /* Cor de fundo do elemento */
+  padding: 20px; /* Espaçamento interno do elemento */
   position: absolute;
   /* Define a distância do canto direito */
   right: 10px;
