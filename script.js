@@ -49,6 +49,9 @@ listaAmbientes.forEach((button) => {
       case 'globomg-globominas':
         iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
         break;
+      case 'sbt':
+        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
+        break;
       default:
         console.log('ID do canal inválido:', idIframe);
     }
