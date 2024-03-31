@@ -3,7 +3,7 @@ const iframeVideo = document.getElementById('iframe-video');
 const body = document.querySelector('body');
 
 // Adicione os IDs dos novos canais
-const listaIds = ['bbb', 'bbb2', 'bbb3', 'bbb4', 'bbb5', 'bbb6', 'bbb7', 'bbb8', 'bbb10', 'bbb11', 'globomg-globominas'];
+const listaIds = ['bbb', 'bbb2', 'bbb3', 'bbb4', 'bbb5', 'bbb6', 'bbb7', 'bbb8', 'bbb10', 'bbb11', 'globomg-globominas', 'sbt'];
 
 // Carregar o "Acompanhe a Casa" por padrão
 iframeVideo.src = `https://reidoscanais.com/embed/?id=bbb`;
