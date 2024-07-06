@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assista seus canais favoritos ao vivo!</title>
     <link rel="stylesheet" href="style.css">
-    <meta name="description" content="Assista o BBB24, Rede Globo, Discovery HD e outros canais ao vivo. Site feito por Brunex.">
-    <meta name="keywords" content="BBB24, Rede Globo, Discovery HD, Canais ao vivo, Brunex">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Assista TNT Sports, Megapix, Space e outros canais ao vivo. Site feito por Brunex.">
+    <meta name="keywords" content="TNT Sports, Megapix, Space, Telecine, HBO, Canais ao vivo, Brunex">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2322986201594913"
         crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="video-container">
-        <iframe id="iframe-video" src="https://reidoscanais.com/embed/?id=bbb" allow="encrypted-media" allowfullscreen="" frameborder="0" width="100%" height="670"></iframe>
+    <div class="video-container" id="video-container" style="display: none;">
+        <iframe id="iframe-video" allow="encrypted-media" allowfullscreen="" frameborder="0" width="100%" height="600"></iframe>
     </div>
     <div class="text-container">
         <h3 class="message">Assista seus canais favoritos ao vivo!</h3>
@@ -21,19 +22,14 @@
         </p>
     </div>
     <div class="container">
-        <button class="ambiente gradient-button" data-id="bbb">Acompanhe a Casa</button>
-        <button class="ambiente gradient-button" data-id="bbb2">Acompanhe a Casa 2</button>
-        <button class="ambiente gradient-button" data-id="bbb3">Segue o Líder</button>
-        <button class="ambiente gradient-button" data-id="bbb4">Cozinha Delícia</button>
-        <button class="ambiente gradient-button" data-id="bbb5">Piscina</button>
-        <button class="ambiente gradient-button" data-id="bbb6">Quarto Fada</button>
-        <button class="ambiente gradient-button" data-id="bbb7">Quarto Gnomo</button>
-        <button class="ambiente gradient-button" data-id="bbb8">Sala</button>
-        <button class="ambiente gradient-button" data-id="bbb10">Academia Rexona</button>
-        <button class="ambiente gradient-button" data-id="bbb11">Cozinha Xepa</button>
-        <button class="ambiente gradient-button" data-id="globomg-globominas">Rede Globo</button>
-        <button class="ambiente gradient-button" data-id="sbt">SBT</button>
-    </div>
+        <button class="channel-button" data-channel="tntsports">TNT Sports</button>
+        <button class="channel-button" data-channel="megapix">Megapix</button>
+        <button class="channel-button" data-channel="space">Space</button>
+        <button class="channel-button" data-channel="telecineaction">Telecine Action</button>
+        <button class="channel-button" data-channel="telecinetouch">Telecine Touch</button>
+        <button class="channel-button" data-channel="telecinepremium">Telecine Premium</button>
+        <button class="channel-button" data-channel="hbo">HBO</button>
+        <button class="channel-button" data-channel="hboplus">HBO Plus</button>
     </div>
     <div class="contador-container">
         <span>Pessoas Online: </span>
