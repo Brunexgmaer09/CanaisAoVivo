@@ -1,59 +1,36 @@
-const listaAmbientes = document.querySelectorAll('.ambiente');
+// Select elements
+const channelButtons = document.querySelectorAll('.channel-button');
+const videoContainer = document.getElementById('video-container');
 const iframeVideo = document.getElementById('iframe-video');
-const body = document.querySelector('body');
 
-// Adicione os IDs dos novos canais
-const listaIds = ['bbb', 'bbb2', 'bbb3', 'bbb4', 'bbb5', 'bbb6', 'bbb7', 'bbb8', 'bbb10', 'bbb11', 'globomg-globominas', 'sbt'];
+// Function to show video
+const showVideo = (channel) => {
+  // Add a fade-in effect
+  videoContainer.style.display = 'block';
+  videoContainer.style.opacity = 0;
+  
+  setTimeout(() => {
+    videoContainer.style.opacity = 1;
+    
+    // Load the video
+    iframeVideo.src = `https://reidoscanais.eu/embed/?id=${channel}`;
+  }, 10);
+};
 
-// Carregar o "Acompanhe a Casa" por padrão
-iframeVideo.src = `https://reidoscanais.com/embed/?id=bbb`;
-
-body.style.backgroundColor = '#000';
-
-listaAmbientes.forEach((button) => {
+// Add click event listeners to channel buttons
+channelButtons.forEach(button => {
   button.addEventListener('click', () => {
-    const idIframe = button.getAttribute('data-id');
+    const channel = button.getAttribute('data-channel');
+    showVideo(channel);
+  });
+});
 
-    // Atualize a lógica para usar os novos IDs
-    switch (idIframe) {
-      case 'bbb':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'bbb2':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'bbb3':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'bbb4':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'bbb5':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'bbb6':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'bbb7':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'bbb8':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'bbb10':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'bbb11':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'globomg-globominas':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      case 'sbt':
-        iframeVideo.src = `https://reidoscanais.com/embed/?id=${idIframe}`;
-        break;
-      default:
-        console.log('ID do canal inválido:', idIframe);
-    }
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
   });
 });
