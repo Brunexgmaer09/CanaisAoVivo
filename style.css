@@ -7,8 +7,7 @@
   --on-surface-color: #ffffff;
   --text-primary: rgba(255, 255, 255, 0.87);
   --text-secondary: rgba(255, 255, 255, 0.6);
-  --button-color: rgba(255, 255, 255, 0.1);
-  --button-hover-color: rgba(255, 255, 255, 0.2);
+  --button-color: #ff4081;
 }
 
 body {
@@ -27,7 +26,9 @@ body {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .video-container:hover {
@@ -44,6 +45,7 @@ body {
 .text-container {
   text-align: center;
   margin-top: 2rem;
+  transition: opacity 0.3s ease;
 }
 
 .message {
@@ -74,6 +76,7 @@ body {
   gap: 1rem;
   margin: 2rem auto;
   max-width: 1200px;
+  transition: opacity 0.3s ease;
 }
 
 .channel-button {
@@ -85,18 +88,13 @@ body {
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   outline: none;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 .channel-button:hover, .channel-button:focus {
-  background-color: var(--button-hover-color);
+  background-color: #ff1a66;
   transform: translateY(-2px);
-  box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.5);
 }
 
 .contador-container {
@@ -110,6 +108,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
+  transition: opacity 0.3s ease;
 }
 
 .contador-container span {
@@ -119,6 +118,51 @@ body {
 
 .contador-container img {
   height: 20px;
+}
+
+.ambient-mode-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+#ambient-mode-toggle {
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 24px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#ambient-mode-toggle:hover {
+  background-color: var(--primary-color);
+}
+
+body.ambient-mode {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+body.ambient-mode .text-container,
+body.ambient-mode .container,
+body.ambient-mode .contador-container {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.ambient-mode .video-container {
+  max-width: 100%;
+  height: 100vh;
+  margin: 0;
+  border-radius: 0;
+}
+
+body.ambient-mode .video-container iframe {
+  height: 100%;
 }
 
 @media (max-width: 768px) {
@@ -139,6 +183,10 @@ body {
 
   .video-container iframe {
     height: 300px;
+  }
+
+  body.ambient-mode .video-container iframe {
+    height: 100vh;
   }
 }
 
