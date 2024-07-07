@@ -3,7 +3,10 @@ const channelButtons = document.querySelectorAll('.channel-button');
 const videoContainer = document.getElementById('video-container');
 const iframeVideo = document.getElementById('iframe-video');
 const ambientModeToggle = document.getElementById('ambient-mode-toggle');
-const body = document.body;
+const ambientBackground = document.getElementById('ambient-background');
+
+let isAmbientModeActive = false;
+const colorThief = new ColorThief();
 
 // Function to show video
 const showVideo = (channel) => {
@@ -19,6 +22,41 @@ const showVideo = (channel) => {
   }, 10);
 };
 
+// Function to toggle ambient mode
+const toggleAmbientMode = () => {
+  isAmbientModeActive = !isAmbientModeActive;
+  document.body.classList.toggle('ambient-mode', isAmbientModeActive);
+  ambientModeToggle.textContent = isAmbientModeActive ? 'Desativar Modo Ambiente' : 'Ativar Modo Ambiente';
+  
+  if (isAmbientModeActive) {
+    updateAmbientColor();
+  } else {
+    ambientBackground.style.backgroundColor = '';
+  }
+};
+
+// Function to update ambient color
+const updateAmbientColor = () => {
+  if (!isAmbientModeActive) return;
+
+  // Create a canvas element
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+
+  // Set canvas size to match the video
+  canvas.width = iframeVideo.clientWidth;
+  canvas.height = iframeVideo.clientHeight;
+
+  // Draw the current frame of the video onto the canvas
+  context.drawImage(iframeVideo, 0, 0, canvas.width, canvas.height);
+
+  // Get the dominant color
+  const dominantColor = colorThief.getColor(canvas);
+
+  // Set the background color
+  ambientBackground.style.backgroundColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
+};
+
 // Add click event listeners to channel buttons
 channelButtons.forEach(button => {
   button.addEventListener('click', () => {
@@ -27,19 +65,11 @@ channelButtons.forEach(button => {
   });
 });
 
-// Ambient mode toggle functionality
-let isAmbientMode = false;
+// Add click event listener to ambient mode toggle
+ambientModeToggle.addEventListener('click', toggleAmbientMode);
 
-ambientModeToggle.addEventListener('click', () => {
-  isAmbientMode = !isAmbientMode;
-  body.classList.toggle('ambient-mode', isAmbientMode);
-  ambientModeToggle.textContent = isAmbientMode ? 'Modo Ambiente: Ativado' : 'Modo Ambiente: Desativado';
-  
-  if (isAmbientMode) {
-    // Scroll to the video when ambient mode is activated
-    videoContainer.scrollIntoView({ behavior: 'smooth' });
-  }
-});
+// Update ambient color periodically
+setInterval(updateAmbientColor, 1000);
 
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -49,18 +79,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       behavior: 'smooth'
     });
   });
-});
-
-// Exit ambient mode when clicking outside the video
-document.addEventListener('click', (event) => {
-  if (isAmbientMode && !videoContainer.contains(event.target) && event.target !== ambientModeToggle) {
-    ambientModeToggle.click();
-  }
-});
-
-// Keyboard shortcut to toggle ambient mode (press 'A' key)
-document.addEventListener('keydown', (event) => {
-  if (event.key.toLowerCase() === 'a') {
-    ambientModeToggle.click();
-  }
 });
