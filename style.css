@@ -1,17 +1,22 @@
+/* Modern color palette */
 :root {
-  --background-color: #e0e5ec;
-  --text-color: #333;
-  --shadow-light: #ffffff;
-  --shadow-dark: #a3b1c6;
-  --accent-color: #6d5dfc;
+  --primary-color: #6200ee;
+  --secondary-color: #03dac6;
+  --background-color: #121212;
+  --surface-color: #1e1e1e;
+  --on-surface-color: #ffffff;
+  --text-primary: rgba(255, 255, 255, 0.87);
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --button-color: rgba(255, 255, 255, 0.1);
+  --button-hover-color: rgba(255, 255, 255, 0.2);
 }
 
 body {
   background-color: var(--background-color);
-  color: var(--text-color);
+  color: var(--text-primary);
   font-family: 'Roboto', sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 0;
   transition: background-color 0.3s ease;
 }
 
@@ -19,17 +24,15 @@ body {
   width: 100%;
   max-width: 1200px;
   margin: 2rem auto;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
-  background: var(--background-color);
-  box-shadow: 
-    8px 8px 15px var(--shadow-dark), 
-    -8px -8px 15px var(--shadow-light);
-  transition: transform 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .video-container:hover {
   transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
 }
 
 .video-container iframe {
@@ -46,13 +49,16 @@ body {
 .message {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--accent-color);
-  text-shadow: 2px 2px 4px var(--shadow-dark);
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
 }
 
 .author-container {
   font-size: 1rem;
-  color: var(--text-color);
+  color: var(--text-secondary);
   opacity: 0.8;
   transition: opacity 0.3s ease;
 }
@@ -71,38 +77,36 @@ body {
 }
 
 .channel-button {
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: var(--button-color);
+  color: var(--on-surface-color);
   border: none;
-  border-radius: 50px;
+  border-radius: 24px;
   padding: 12px 24px;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   outline: none;
-  box-shadow: 
-    5px 5px 10px var(--shadow-dark), 
-    -5px -5px 10px var(--shadow-light);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 .channel-button:hover, .channel-button:focus {
-  box-shadow: 
-    inset 5px 5px 10px var(--shadow-dark), 
-    inset -5px -5px 10px var(--shadow-light);
-  color: var(--accent-color);
+  background-color: var(--button-hover-color);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.5);
 }
 
 .contador-container {
   position: fixed;
   bottom: 20px;
   left: 20px;
-  background-color: var(--background-color);
+  background-color: var(--surface-color);
   padding: 10px 20px;
   border-radius: 30px;
-  box-shadow: 
-    5px 5px 10px var(--shadow-dark), 
-    -5px -5px 10px var(--shadow-light);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -110,7 +114,7 @@ body {
 
 .contador-container span {
   font-size: 0.9rem;
-  color: var(--text-color);
+  color: var(--text-secondary);
 }
 
 .contador-container img {
@@ -138,6 +142,7 @@ body {
   }
 }
 
+/* Smooth scrolling for the whole page */
 html {
   scroll-behavior: smooth;
 }
