@@ -3,7 +3,6 @@ const channelButtons = document.querySelectorAll('.channel-button');
 const videoContainer = document.getElementById('video-container');
 const iframeVideo = document.getElementById('iframe-video');
 const ambientModeToggle = document.getElementById('ambient-mode-toggle');
-const ambientBackground = document.getElementById('ambient-background');
 
 let isAmbientModeActive = false;
 
@@ -35,30 +34,19 @@ const showVideo = (channel) => {
 // Função para alternar o modo ambiente
 function toggleAmbientMode() {
     isAmbientModeActive = !isAmbientModeActive;
-    document.body.classList.toggle('ambient-mode', isAmbientModeActive);
     
     if (isAmbientModeActive) {
-        updateAmbientColor();
+        updateVideoBackground();
     } else {
-        ambientBackground.style.backgroundColor = '';
         updateVideoBackground('');
     }
-}
-
-// Função para atualizar a cor do ambiente
-function updateAmbientColor() {
-    if (!isAmbientModeActive) return;
-    
-    const randomColor = getRandomDarkColor();
-    ambientBackground.style.backgroundColor = randomColor;
-    updateVideoBackground(randomColor);
 }
 
 // Função para atualizar o fundo do vídeo
 function updateVideoBackground(color) {
     const videoBackground = document.querySelector('.video-background');
     if (videoBackground) {
-        videoBackground.style.backgroundColor = color;
+        videoBackground.style.backgroundColor = color || getRandomDarkColor();
     }
 }
 
@@ -73,10 +61,10 @@ channelButtons.forEach(button => {
 // Adicionar evento de change ao checkbox
 ambientModeToggle.addEventListener('change', toggleAmbientMode);
 
-// Atualizar a cor do ambiente e do fundo do vídeo a cada 5 segundos quando ativo
+// Atualizar a cor do fundo do vídeo a cada 5 segundos quando ativo
 setInterval(() => {
     if (isAmbientModeActive) {
-        updateAmbientColor();
+        updateVideoBackground();
     }
 }, 5000);
 
