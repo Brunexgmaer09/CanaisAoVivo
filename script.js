@@ -6,7 +6,17 @@ const ambientModeToggle = document.getElementById('ambient-mode-toggle');
 const ambientBackground = document.getElementById('ambient-background');
 
 let isAmbientModeActive = false;
-const colorThief = new ColorThief();
+
+// Array de cores escuras
+const darkColors = [
+    '#1A1A2E', '#16213E', '#0F3460', '#1F1D36',
+    '#3F0071', '#150050', '#000000', '#1B1B1B'
+];
+
+// Função para obter uma cor aleatória do array
+function getRandomDarkColor() {
+    return darkColors[Math.floor(Math.random() * darkColors.length)];
+}
 
 // Function to show video
 const showVideo = (channel) => {
@@ -22,40 +32,25 @@ const showVideo = (channel) => {
   }, 10);
 };
 
-// Function to toggle ambient mode
-const toggleAmbientMode = () => {
-  isAmbientModeActive = !isAmbientModeActive;
-  document.body.classList.toggle('ambient-mode', isAmbientModeActive);
-  ambientModeToggle.textContent = isAmbientModeActive ? 'Desativar Modo Ambiente' : 'Ativar Modo Ambiente';
-  
-  if (isAmbientModeActive) {
-    updateAmbientColor();
-  } else {
-    ambientBackground.style.backgroundColor = '';
-  }
-};
+// Função para alternar o modo ambiente
+function toggleAmbientMode() {
+    isAmbientModeActive = !isAmbientModeActive;
+    document.body.classList.toggle('ambient-mode', isAmbientModeActive);
+    
+    if (isAmbientModeActive) {
+        updateAmbientColor();
+    } else {
+        ambientBackground.style.backgroundColor = '';
+    }
+}
 
-// Function to update ambient color
-const updateAmbientColor = () => {
-  if (!isAmbientModeActive) return;
-
-  // Create a canvas element
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-
-  // Set canvas size to match the video
-  canvas.width = iframeVideo.clientWidth;
-  canvas.height = iframeVideo.clientHeight;
-
-  // Draw the current frame of the video onto the canvas
-  context.drawImage(iframeVideo, 0, 0, canvas.width, canvas.height);
-
-  // Get the dominant color
-  const dominantColor = colorThief.getColor(canvas);
-
-  // Set the background color
-  ambientBackground.style.backgroundColor = `rgb(${dominantColor[0]}, ${dominantColor[1]}, ${dominantColor[2]})`;
-};
+// Função para atualizar a cor do ambiente
+function updateAmbientColor() {
+    if (!isAmbientModeActive) return;
+    
+    const randomColor = getRandomDarkColor();
+    ambientBackground.style.backgroundColor = randomColor;
+}
 
 // Add click event listeners to channel buttons
 channelButtons.forEach(button => {
@@ -65,11 +60,15 @@ channelButtons.forEach(button => {
   });
 });
 
-// Add click event listener to ambient mode toggle
-ambientModeToggle.addEventListener('click', toggleAmbientMode);
+// Adicionar evento de change ao checkbox
+ambientModeToggle.addEventListener('change', toggleAmbientMode);
 
-// Update ambient color periodically
-setInterval(updateAmbientColor, 1000);
+// Atualizar a cor do ambiente a cada 5 segundos quando ativo
+setInterval(() => {
+    if (isAmbientModeActive) {
+        updateAmbientColor();
+    }
+}, 5000);
 
 // Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
