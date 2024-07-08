@@ -41,6 +41,7 @@ function toggleAmbientMode() {
         updateAmbientColor();
     } else {
         ambientBackground.style.backgroundColor = '';
+        updateVideoBackground('');
     }
 }
 
@@ -50,6 +51,15 @@ function updateAmbientColor() {
     
     const randomColor = getRandomDarkColor();
     ambientBackground.style.backgroundColor = randomColor;
+    updateVideoBackground(randomColor);
+}
+
+// Função para atualizar o fundo do vídeo
+function updateVideoBackground(color) {
+    const videoBackground = document.querySelector('.video-background');
+    if (videoBackground) {
+        videoBackground.style.backgroundColor = color;
+    }
 }
 
 // Add click event listeners to channel buttons
@@ -63,7 +73,7 @@ channelButtons.forEach(button => {
 // Adicionar evento de change ao checkbox
 ambientModeToggle.addEventListener('change', toggleAmbientMode);
 
-// Atualizar a cor do ambiente a cada 5 segundos quando ativo
+// Atualizar a cor do ambiente e do fundo do vídeo a cada 5 segundos quando ativo
 setInterval(() => {
     if (isAmbientModeActive) {
         updateAmbientColor();
