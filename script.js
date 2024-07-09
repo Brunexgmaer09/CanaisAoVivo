@@ -88,13 +88,13 @@ function fadeSmokeText() {
     spans.forEach((span, index) => {
         setTimeout(() => {
             span.classList.add('fade');
-        }, index * 100);
+        }, index * 500);
     });
     setTimeout(() => {
         smokeText.innerHTML = '';
         charIndex = 0;
         animateSmokeText();
-    }, spans.length * 100 + 1000);
+    }, spans.length * 500 + 5000);
 }
 
 animateSmokeText();
