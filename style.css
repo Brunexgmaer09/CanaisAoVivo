@@ -226,45 +226,26 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 768px) {
-  .message {
-    font-size: 1.5rem;
-  }
-  
-  .container {
-    padding: 1rem;
-  }
-  
-  .channel-button {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-  }
-  
-  .contador-container {
-    left: 10px;
-    bottom: 10px;
-    padding: 8px 16px;
-  }
-
-  .video-container iframe {
-    height: 300px;
-  }
-}
-
-/* Smooth scrolling for the whole page */
-html {
-  scroll-behavior: smooth;
-}
-
-@media (max-width: 768px) {
   .ambient-mode-container {
     top: auto;
     bottom: 20px;
     right: 20px;
     z-index: 10;
+    padding: 5px 10px;
+    font-size: 0.8rem;
   }
 
-  .video-container {
-    margin-top: 1rem;
-    margin-bottom: 4rem;
+  .switch {
+    width: 40px;
+    height: 24px;
+  }
+
+  .slider:before {
+    height: 18px;
+    width: 18px;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(16px);
   }
 }
