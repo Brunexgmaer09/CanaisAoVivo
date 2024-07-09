@@ -109,7 +109,7 @@ body.ambient-mode #ambient-background {
 }
 
 .channel-button {
-  background-color: var(--button-color);
+  background-color: var(--background-color);
   color: var(--on-surface-color);
   border: none;
   border-radius: 12px;
@@ -118,14 +118,13 @@ body.ambient-mode #ambient-background {
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3),
+              -5px -5px 10px rgba(255, 255, 255, 0.05);
 }
 
 .channel-button:hover, .channel-button:focus {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.3),
+              inset -5px -5px 10px rgba(255, 255, 255, 0.05);
 }
 
 .ambient-mode-container {
@@ -134,25 +133,26 @@ body.ambient-mode #ambient-background {
   right: 20px;
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  padding: 10px 20px;
-  border-radius: 30px;
+  padding: 8px 16px;
+  border-radius: 20px;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  font-size: 0.9rem;
 }
 
 .light-icon {
-  font-size: 1.2rem;
-  margin-right: 10px;
+  font-size: 1rem;
+  margin-right: 8px;
 }
 
 /* The switch - the box around the slider */
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
-  margin-left: 10px;
+  width: 50px;
+  height: 28px;
+  margin-left: 8px;
 }
 
 /* Hide default HTML checkbox */
@@ -177,10 +177,10 @@ body.ambient-mode #ambient-background {
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
   background-color: var(--on-surface-color);
   transition: .4s;
 }
@@ -190,7 +190,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(26px);
+  transform: translateX(22px);
 }
 
 /* Rounded sliders */
@@ -226,12 +226,35 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 768px) {
+  .message {
+    font-size: 1.5rem;
+  }
+  
+  .container {
+    padding: 1rem;
+  }
+  
+  .channel-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .contador-container {
+    left: 10px;
+    bottom: 10px;
+    padding: 8px 16px;
+  }
+
+  .video-container iframe {
+    height: 300px;
+  }
+
   .ambient-mode-container {
     top: auto;
     bottom: 20px;
     right: 20px;
     z-index: 10;
-    padding: 5px 10px;
+    padding: 6px 12px;
     font-size: 0.8rem;
   }
 
@@ -243,9 +266,21 @@ input:checked + .slider:before {
   .slider:before {
     height: 18px;
     width: 18px;
+    left: 3px;
+    bottom: 3px;
   }
 
   input:checked + .slider:before {
     transform: translateX(16px);
   }
+
+  .video-container {
+    margin-top: 1rem;
+    margin-bottom: 4rem;
+  }
+}
+
+/* Smooth scrolling for the whole page */
+html {
+  scroll-behavior: smooth;
 }
