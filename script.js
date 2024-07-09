@@ -3,9 +3,6 @@ const channelButtons = document.querySelectorAll('.channel-button');
 const videoContainer = document.getElementById('video-container');
 const iframeVideo = document.getElementById('iframe-video');
 const ambientModeToggle = document.getElementById('ambient-mode-toggle');
-const smokeText = document.querySelector('.smoke-text');
-const texts = ['Site feito por Brunex'];
-let currentIndex = 0;
 
 let isAmbientModeActive = false;
 
@@ -45,22 +42,6 @@ function toggleAmbientMode() {
     }
 }
 
-function animateText() {
-    smokeText.textContent = texts[currentIndex];
-    smokeText.classList.add('active');
-
-    setTimeout(() => {
-        smokeText.classList.add('fade-out');
-        setTimeout(() => {
-            smokeText.classList.remove('active', 'fade-out');
-            currentIndex = (currentIndex + 1) % texts.length;
-            setTimeout(animateText, 100); // Pequeno atraso antes da próxima animação
-        }, 500);
-    }, 2000); // Tempo que o texto fica visível
-}
-
-animateText();
-
 // Função para atualizar o fundo do vídeo
 function updateVideoBackground(color) {
     const videoBackground = document.querySelector('.video-background');
@@ -87,12 +68,33 @@ setInterval(() => {
     }
 }, 5000);
 
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
+// Smoke text animation
+const smokeText = document.getElementById('smoke-text');
+const text = 'Site feito por Brunex';
+let charIndex = 0;
+
+function animateSmokeText() {
+    if (charIndex < text.length) {
+        smokeText.innerHTML += `<span>${text[charIndex]}</span>`;
+        charIndex++;
+        setTimeout(animateSmokeText, 100);
+    } else {
+        setTimeout(fadeSmokeText, 2000);
+    }
+}
+
+function fadeSmokeText() {
+    const spans = smokeText.querySelectorAll('span');
+    spans.forEach((span, index) => {
+        setTimeout(() => {
+            span.classList.add('fade');
+        }, index * 100);
     });
-  });
-});
+    setTimeout(() => {
+        smokeText.innerHTML = '';
+        charIndex = 0;
+        animateSmokeText();
+    }, spans.length * 100 + 1000);
+}
+
+animateSmokeText();
