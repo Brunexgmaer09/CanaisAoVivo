@@ -22,39 +22,44 @@ body {
 
 .smoke-text {
     display: inline-block;
-    text-align: center;
-    font-size: 24px;
-    color: transparent;
-    background: linear-gradient(to right, #f1c40f, #e74c3c, #9b59b6, #3498db);
-    -webkit-background-clip: text;
-    background-clip: text;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.smoke-text span {
+    display: inline-block;
     opacity: 0;
-    transform: scale(2);
-    filter: blur(10px);
-    transition: all 0.5s ease-out;
+    filter: blur(0px);
+    animation: smoke-in 0.5s forwards;
 }
 
-.smoke-text.active {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
+.smoke-text span.fade {
+    animation: smoke-out 2s forwards;
 }
 
-@keyframes smokeOut {
+@keyframes smoke-in {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0);
+    }
+}
+
+@keyframes smoke-out {
     0% {
         opacity: 1;
-        transform: scale(1);
-        filter: blur(0);
+        filter: blur(0px);
     }
     100% {
         opacity: 0;
-        transform: scale(1.5);
         filter: blur(10px);
+        transform: translateY(-20px) scale(0.5);
     }
-}
-
-.smoke-text.fade-out {
-    animation: smokeOut 0.5s ease-out forwards;
 }
 
 #ambient-background {
