@@ -20,6 +20,43 @@ body {
   background-attachment: fixed;
 }
 
+.smoke-text {
+    display: inline-block;
+    text-align: center;
+    font-size: 24px;
+    color: transparent;
+    background: linear-gradient(to right, #f1c40f, #e74c3c, #9b59b6, #3498db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    opacity: 0;
+    transform: scale(2);
+    filter: blur(10px);
+    transition: all 0.5s ease-out;
+}
+
+.smoke-text.active {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+}
+
+@keyframes smokeOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+        filter: blur(10px);
+    }
+}
+
+.smoke-text.fade-out {
+    animation: smokeOut 0.5s ease-out forwards;
+}
+
 #ambient-background {
   position: fixed;
   top: 0;
