@@ -3,6 +3,9 @@ const channelButtons = document.querySelectorAll('.channel-button');
 const videoContainer = document.getElementById('video-container');
 const iframeVideo = document.getElementById('iframe-video');
 const ambientModeToggle = document.getElementById('ambient-mode-toggle');
+const smokeText = document.querySelector('.smoke-text');
+const texts = ['Site feito por Brunex'];
+let currentIndex = 0;
 
 let isAmbientModeActive = false;
 
@@ -41,6 +44,22 @@ function toggleAmbientMode() {
         updateVideoBackground('');
     }
 }
+
+function animateText() {
+    smokeText.textContent = texts[currentIndex];
+    smokeText.classList.add('active');
+
+    setTimeout(() => {
+        smokeText.classList.add('fade-out');
+        setTimeout(() => {
+            smokeText.classList.remove('active', 'fade-out');
+            currentIndex = (currentIndex + 1) % texts.length;
+            setTimeout(animateText, 100); // Pequeno atraso antes da próxima animação
+        }, 500);
+    }, 2000); // Tempo que o texto fica visível
+}
+
+animateText();
 
 // Função para atualizar o fundo do vídeo
 function updateVideoBackground(color) {
