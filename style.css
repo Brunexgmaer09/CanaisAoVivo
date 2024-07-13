@@ -86,20 +86,27 @@ body.ambient-mode #ambient-background {
   overflow: hidden;
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px); /* Aumentado de 10px para 20px */
+  -webkit-backdrop-filter: blur(20px); /* Para suporte ao Safari */
 }
 
 .video-background {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #000;
-  filter: blur(50px);
-  opacity: 0.7;
+  top: -20px; /* Estendido para cobrir a borda superior */
+  left: -20px; /* Estendido para cobrir a borda esquerda */
+  right: -20px; /* Estendido para cobrir a borda direita */
+  bottom: -20px; /* Estendido para cobrir a borda inferior */
+  background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo mais escura para maior efeito */
+  filter: blur(30px); /* Aumentado de 50px para 30px para um efeito mais intenso */
+  opacity: 0.8; /* Aumentado de 0.7 para 0.8 para maior intensidade */
   z-index: 0;
-  transition: background-color 2s ease;
+  transition: background-color 2s ease, filter 2s ease, opacity 2s ease;
+}
+
+body.ambient-mode .video-background {
+  opacity: 1; /* Totalmente visível no modo ambiente */
+  filter: blur(50px); /* Blur ainda mais intenso no modo ambiente */
+  background-color: rgba(0, 0, 0, 0.7); /* Cor de fundo ainda mais escura no modo ambiente */
 }
 
 .video-container iframe {
