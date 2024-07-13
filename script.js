@@ -3,7 +3,6 @@ const channelButtons = document.querySelectorAll('.channel-button');
 const videoContainer = document.getElementById('video-container');
 const iframeVideo = document.getElementById('iframe-video');
 const ambientModeToggle = document.getElementById('ambient-mode-toggle');
-
 let isAmbientModeActive = false;
 
 // Array de cores escuras
@@ -34,6 +33,7 @@ const showVideo = (channel) => {
 // Função para alternar o modo ambiente
 function toggleAmbientMode() {
     isAmbientModeActive = !isAmbientModeActive;
+    document.body.classList.toggle('ambient-mode', isAmbientModeActive);
     
     if (isAmbientModeActive) {
         updateVideoBackground();
@@ -62,11 +62,28 @@ channelButtons.forEach(button => {
 ambientModeToggle.addEventListener('change', toggleAmbientMode);
 
 // Atualizar a cor do fundo do vídeo a cada 5 segundos quando ativo
-setInterval(() => {
-    if (isAmbientModeActive) {
-        updateVideoBackground();
+let ambientInterval;
+
+function startAmbientInterval() {
+    ambientInterval = setInterval(() => {
+        if (isAmbientModeActive) {
+            updateVideoBackground();
+        }
+    }, 5000);
+}
+
+function stopAmbientInterval() {
+    clearInterval(ambientInterval);
+}
+
+// Iniciar o intervalo quando o modo ambiente é ativado
+ambientModeToggle.addEventListener('change', function() {
+    if (this.checked) {
+        startAmbientInterval();
+    } else {
+        stopAmbientInterval();
     }
-}, 5000);
+});
 
 // Smoke text animation
 const smokeText = document.getElementById('smoke-text');
