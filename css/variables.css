@@ -1,0 +1,16 @@
+/* css/variables.css */
+:root {
+    --primary-color: #6200ee;
+    --secondary-color: #03dac6;
+    --background-color: #0a0a0a;
+    --surface-color: rgba(255, 255, 255, 0.05);
+    --on-surface-color: #ffffff;
+    --text-primary: rgba(255, 255, 255, 0.87);
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --button-color: rgba(255, 255, 255, 0.1);
+    
+    /* Adicionais */
+    --transition-speed: 0.3s;
+    --border-radius: 20px;
+    --box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  }
