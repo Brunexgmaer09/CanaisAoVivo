@@ -5,10 +5,29 @@ body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    background-image: linear-gradient(45deg, #080808, #111111);
+    background-image: 
+        radial-gradient(circle at top right, rgba(124, 58, 237, 0.1), transparent 50%),
+        radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.1), transparent 50%),
+        linear-gradient(45deg, #030712, #0f172a);
     background-attachment: fixed;
-  }
-  
-  html {
+    min-height: 100vh;
+}
+
+html {
     scroll-behavior: smooth;
-  }
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+    margin: 2rem auto;
+    max-width: 1200px;
+    padding: 2.5rem;
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    border: var(--glass-border);
+    box-shadow: var(--box-shadow);
+}

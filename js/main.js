@@ -1,5 +1,5 @@
 import { showVideo } from './modules/videoController.js';
-import { toggleAmbientMode, getRandomDarkColor } from './modules/ambientMode.js';
+import { toggleAmbientMode, initAmbientMode } from './modules/ambientMode.js';
 import { animateSmokeText } from './modules/smokeText.js';
 
 // Selecionar elementos
@@ -10,35 +10,45 @@ const ambientModeToggle = document.getElementById('ambient-mode-toggle');
 let isAmbientModeActive = false;
 let ambientInterval;
 
+// Adicione no início do arquivo main.js
+function checkAdBlocker() {
+    if (window.canRunAds === undefined) {
+        console.log('Ad blocker detectado - não afeta a funcionalidade principal');
+    }
+}
+
+// Inicializar modo ambiente
+document.addEventListener('DOMContentLoaded', () => {
+    initAmbientMode();
+    animateSmokeText();
+});
+
 // Adicionar listeners aos botões de canal
 channelButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const channel = button.getAttribute('data-channel');
-    showVideo(channel);
-  });
+    button.addEventListener('click', () => {
+        const channel = button.getAttribute('data-channel');
+        showVideo(channel);
+    });
 });
 
 // Função para atualizar fundo do vídeo
 function updateVideoBackground() {
-  const videoBackground = document.querySelector('.video-background');
-  if (videoBackground) {
-    videoBackground.style.backgroundColor = getRandomDarkColor();
-  }
+    const videoBackground = document.querySelector('.video-background');
+    if (videoBackground) {
+        videoBackground.style.backgroundColor = getRandomDarkColor();
+    }
 }
 
 // Alternar modo ambiente
 ambientModeToggle.addEventListener('change', () => {
-  isAmbientModeActive = ambientModeToggle.checked;
-  toggleAmbientMode(isAmbientModeActive);
+    isAmbientModeActive = ambientModeToggle.checked;
+    toggleAmbientMode(isAmbientModeActive);
 
-  if (isAmbientModeActive) {
-    updateVideoBackground();
-    ambientInterval = setInterval(updateVideoBackground, 5000);
-  } else {
-    clearInterval(ambientInterval);
-  }
+    if (isAmbientModeActive) {
+        updateVideoBackground();
+        ambientInterval = setInterval(updateVideoBackground, 5000);
+    } else {
+        clearInterval(ambientInterval);
+    }
 });
-
-// Inicializar animação do texto smoke
-animateSmokeText();
 
