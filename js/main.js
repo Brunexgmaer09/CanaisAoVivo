@@ -1,13 +1,4 @@
-import { showVideo } from './modules/videoController.js';
-import { toggleAmbientMode, initAmbientMode } from './modules/ambientMode.js';
-import { animateSmokeText } from './modules/smokeText.js';
-
-// Selecionar elementos
-const channelButtons = document.querySelectorAll('.channel-button');
-const ambientModeToggle = document.getElementById('ambient-mode-toggle');
-
-// Variáveis de estado
-// Arquivo principal - inicialização do jogo
+// Arquivo principal - inicialização do jogo Warzone 2D
 
 // Variáveis globais
 let game = null;
@@ -96,33 +87,6 @@ function optimizePerformance() {
     }
 }
 
-// Função para configurar análise de performance
-function setupPerformanceMonitoring() {
-    if (!window.performance || !window.performance.mark) {
-        console.warn('Performance API não disponível');
-        return;
-    }
-    
-    // Marcar início do carregamento
-    performance.mark('game-load-start');
-    
-    // Monitorar FPS baixo
-    let lowFpsCount = 0;
-    const checkFPS = () => {
-        if (game && game.fps < 30) {
-            lowFpsCount++;
-            if (lowFpsCount > 10) {
-                console.warn('FPS baixo detectado:', game.fps);
-                // Aqui poderíamos reduzir qualidade gráfica automaticamente
-            }
-        } else {
-            lowFpsCount = 0;
-        }
-    };
-    
-    setInterval(checkFPS, 1000);
-}
-
 // Função para configurar shortcuts de debug
 function setupDebugShortcuts() {
     document.addEventListener('keydown', (e) => {
@@ -167,95 +131,6 @@ function setupDebugShortcuts() {
     });
 }
 
-// Função para salvar configurações
-function saveGameSettings() {
-    try {
-        const settings = {
-            volume: 1.0,
-            showTooltips: true,
-            lastPlayed: Date.now()
-        };
-        
-        localStorage.setItem('warzone2d_settings', JSON.stringify(settings));
-    } catch (e) {
-        console.warn('Não foi possível salvar configurações:', e);
-    }
-}
-
-// Função para carregar configurações
-function loadGameSettings() {
-    try {
-        const saved = localStorage.getItem('warzone2d_settings');
-        if (saved) {
-            const settings = JSON.parse(saved);
-            return settings;
-        }
-    } catch (e) {
-        console.warn('Não foi possível carregar configurações:', e);
-    }
-    
-    // Configurações padrão
-    return {
-        volume: 1.0,
-        showTooltips: true
-    };
-}
-
-// Função para configurar PWA (Progressive Web App)
-function setupPWA() {
-    // Verificar se é PWA
-    if ('serviceWorker' in navigator) {
-        console.log('PWA suportado');
-        // Aqui poderíamos registrar um service worker
-    }
-    
-    // Configurar manifest
-    const manifest = {
-        name: "Warzone 2D",
-        short_name: "Warzone2D",
-        description: "Battle Royale em 2D top-down",
-        start_url: "/",
-        display: "fullscreen",
-        background_color: "#1a1a1a",
-        theme_color: "#2d5a27",
-        icons: [
-            {
-                src: "icon-192.png",
-                sizes: "192x192",
-                type: "image/png"
-            }
-        ]
-    };
-    
-    // Criar e adicionar manifest dinamicamente
-    const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-    const manifestURL = URL.createObjectURL(manifestBlob);
-    
-    const link = document.createElement('link');
-    link.rel = 'manifest';
-    link.href = manifestURL;
-    document.head.appendChild(link);
-}
-
-// Função para lidar com erros globais
-function setupErrorHandling() {
-    window.addEventListener('error', (event) => {
-        console.error('Erro global:', event.error);
-        
-        // Tentar recuperar ou mostrar mensagem amigável
-        if (game) {
-            game.isPaused = true;
-        }
-        
-        showError('Ocorreu um erro inesperado. Tente recarregar a página.');
-    });
-    
-    window.addEventListener('unhandledrejection', (event) => {
-        console.error('Promise rejeitada:', event.reason);
-        event.preventDefault(); // Prevenir erro no console
-    });
-}
-
 // Função para configurar mobile
 function setupMobileOptimizations() {
     // Detectar dispositivo móvel
@@ -274,6 +149,14 @@ function setupMobileOptimizations() {
         
         // Adicionar controles touch (implementação futura)
         document.body.classList.add('mobile');
+        
+        // Reduzir tamanho do canvas para mobile
+        const canvas = document.getElementById('gameCanvas');
+        if (canvas && window.innerWidth < 1200) {
+            const scale = window.innerWidth / 1200;
+            canvas.style.transform = `scale(${scale})`;
+            canvas.style.transformOrigin = 'top left';
+        }
     }
 }
 
@@ -290,13 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Configurar otimizações
     optimizePerformance();
-    setupPerformanceMonitoring();
-    setupErrorHandling();
     setupMobileOptimizations();
-    setupPWA();
-    
-    // Carregar configurações
-    const settings = loadGameSettings();
     
     // Configurar debug apenas em desenvolvimento
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -313,11 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         initGame();
     }, 100);
-});
-
-// Salvar configurações antes de sair
-window.addEventListener('beforeunload', () => {
-    saveGameSettings();
 });
 
 // Exports para debug global (apenas em desenvolvimento)
@@ -349,46 +221,4 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
     
     console.log('Debug disponível em window.gameDebug');
 }
-
-// Adicione no início do arquivo main.js
-function checkAdBlocker() {
-    if (window.canRunAds === undefined) {
-        console.log('Ad blocker detectado - não afeta a funcionalidade principal');
-    }
-}
-
-// Inicializar modo ambiente
-document.addEventListener('DOMContentLoaded', () => {
-    initAmbientMode();
-    animateSmokeText();
-});
-
-// Adicionar listeners aos botões de canal
-channelButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const channel = button.getAttribute('data-channel');
-        showVideo(channel);
-    });
-});
-
-// Função para atualizar fundo do vídeo
-function updateVideoBackground() {
-    const videoBackground = document.querySelector('.video-background');
-    if (videoBackground) {
-        videoBackground.style.backgroundColor = getRandomDarkColor();
-    }
-}
-
-// Alternar modo ambiente
-ambientModeToggle.addEventListener('change', () => {
-    isAmbientModeActive = ambientModeToggle.checked;
-    toggleAmbientMode(isAmbientModeActive);
-
-    if (isAmbientModeActive) {
-        updateVideoBackground();
-        ambientInterval = setInterval(updateVideoBackground, 5000);
-    } else {
-        clearInterval(ambientInterval);
-    }
-});
 

@@ -155,6 +155,16 @@ class InputManager {
             this.mouse.y = e.clientY - rect.top;
         });
         
+        // Eventos de touch para mobile
+        document.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const canvas = document.getElementById('gameCanvas');
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            this.mouse.x = touch.clientX - rect.left;
+            this.mouse.y = touch.clientY - rect.top;
+        });
+        
         document.addEventListener('mousedown', (e) => {
             switch(e.button) {
                 case 0: this.mouse.left = true; break;
@@ -169,6 +179,23 @@ class InputManager {
                 case 1: this.mouse.middle = false; break;
                 case 2: this.mouse.right = false; break;
             }
+        });
+        
+        // Touch events para mobile
+        document.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.mouse.left = true;
+            const canvas = document.getElementById('gameCanvas');
+            const rect = canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            this.mouse.x = touch.clientX - rect.left;
+            this.mouse.y = touch.clientY - rect.top;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            this.mouse.left = false;
+            this.mouse.right = false;
         });
         
         // Prevenir menu de contexto

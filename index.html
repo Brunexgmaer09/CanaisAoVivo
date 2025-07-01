@@ -16,12 +16,17 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            touch-action: none;
+            user-select: none;
         }
         
         #gameCanvas {
             border: 2px solid #333;
             background: #2d5a27;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            max-width: 100vw;
+            max-height: 100vh;
+            touch-action: none;
         }
         
         .game-container {
@@ -102,6 +107,45 @@
             background: white;
             transform: translate(-50%, -50%);
         }
+        
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            #gameCanvas {
+                width: 100vw;
+                height: 60vh;
+            }
+            
+            .hud {
+                font-size: 12px;
+                top: 5px;
+                left: 5px;
+            }
+            
+            .minimap {
+                width: 100px;
+                height: 100px;
+                top: 5px;
+                right: 5px;
+            }
+            
+            .controls {
+                bottom: 5px;
+                left: 5px;
+                font-size: 10px;
+                max-width: 80%;
+            }
+        }
+        
+        /* Prevent selection and zoom */
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
     </style>
 </head>
 <body>
@@ -120,9 +164,9 @@
         <canvas class="minimap" id="minimap" width="150" height="150"></canvas>
         
         <div class="controls">
-            <div>WASD - Mover | Mouse - Mirar | Click Esquerdo - Atirar</div>
-            <div>Click Direito - Mira | E - Coletar loot | R - Recarregar</div>
-            <div>1, 2, 3 - Trocar arma | ESC - Pausar</div>
+            <div>WASD - Mover | Mouse/Touch - Mirar | Click/Tap - Atirar</div>
+            <div>E - Coletar loot | R - Recarregar | 1,2,3 - Trocar arma</div>
+            <div>ESC - Pausar | Mobile: Tap para mover e atirar</div>
         </div>
         
         <div class="loading" id="loading">Carregando Warzone 2D...</div>
