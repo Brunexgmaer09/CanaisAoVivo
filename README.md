@@ -10,6 +10,21 @@ Um jogo de battle royale em 2D com visão top-down, inspirado no Warzone, desenv
 - **Coleta de loot**: Encontre armas, armaduras e suprimentos
 - **Movimento fluido**: Controle preciso com WASD
 - **Sistema de vida e armadura**: Mecânicas de sobrevivência
+- **🤖 139 Bots IA inteligentes** - Battle Royale completo com 140 jogadores!
+
+### 🤖 Sistema de Bots IA (NOVO!)
+- **Comportamento Inteligente**: 
+  - Estados: Explorar, Coletar Loot, Combate, Fugir, Escapar da Zona
+  - Personalidades únicas (agressividade, cautela, precisão)
+  - Detecção de inimigos e navegação autônoma
+- **Combate Avançado**:
+  - Diferentes níveis de precisão e tempo de reação
+  - Estratégias de combate (flanquear, manter distância)
+  - Sistema de recarga e troca de armas
+- **Sobrevivência**:
+  - Fuga inteligente da zona de dano
+  - Coleta automática de loot
+  - Tomada de decisão baseada em situação (vida baixa = fugir)
 
 ### 🗺️ Mundo do Jogo
 - **Mapa procedural**: Casas, estradas, lagos e obstáculos gerados automaticamente
@@ -77,103 +92,43 @@ Um jogo de battle royale em 2D com visão top-down, inspirado no Warzone, desenv
 - **Status**: Dentro ou fora da zona
 - **Distância**: Metros até a borda (se fora)
 
-## �️ Arquitetura Técnica
+## 🎯 Como Jogar
 
-### 📁 Estrutura de Arquivos
-```
-/
-├── index.html          # Interface principal
-├── js/
-│   ├── utils.js        # Utilitários e matemática
-│   ├── gameObjects.js  # Objetos base (casas, balas, etc)
-│   ├── player.js       # Lógica do jogador
-│   ├── weapons.js      # Sistema de armas
-│   ├── loot.js         # Sistema de loot e raridades
-│   ├── map.js          # Geração e renderização do mapa
-│   ├── game.js         # Loop principal e gerenciamento
-│   └── main.js         # Inicialização e setup
-└── README.md
-```
+### Controles Desktop
+- **WASD** - Movimento
+- **Mouse** - Mirar
+- **Click Esquerdo** - Atirar
+- **E** - Coletar loot próximo
+- **R** - Recarregar arma
+- **1, 2, 3** - Trocar arma
+- **ESC** - Pausar jogo
 
-### 🎨 Sistemas Implementados
+### Controles Mobile
+- **Touch** - Mover para posição tocada
+- **Tap** - Atirar na direção tocada
+- **Drag** - Mirar continuamente
 
-#### 🔧 Sistema de Utilitários (`utils.js`)
-- **Vector2**: Matemática vetorial
-- **MathUtils**: Funções matemáticas
-- **CollisionUtils**: Detecção de colisões
-- **InputManager**: Gerenciamento de entrada
-- **EffectsManager**: Sistema de partículas
-- **SoundManager**: Sistema de áudio (simulado)
+## � Objetivo
 
-#### 🏠 Objetos do Jogo (`gameObjects.js`)
-- **GameObject**: Classe base
-- **House**: Casas com quartos e loot
-- **Bullet**: Projéteis com física
-- **LootBox**: Contêineres de loot
-- **SafeZone**: Zona segura dinâmica
+**Seja o último sobrevivente!** 
 
-#### � Jogador (`player.js`)
-- **Movimento**: Física baseada em velocidade
-- **Combate**: Sistema de tiro e recarga
-- **Inventário**: Gerenciamento de items
-- **Stats**: Vida, armadura, munição
-- **Efeitos visuais**: Flash de dano, muzzle flash
+Você começa com mais 139 bots IA em um mapa gigante. Colete armas e equipamentos, elimine inimigos e sobreviva à zona que vai fechando. Os bots têm personalidades e estratégias diferentes - alguns são agressivos, outros cautelosos, alguns fogem quando feridos.
 
-#### 🔫 Armas (`weapons.js`)
-- **Weapon**: Classe base com estatísticas
-- **WeaponAttachment**: Sistema de anexos
-- **WeaponManager**: Gerenciamento de arsenal
-- **Balanceamento**: Cada arma tem características únicas
+**🥇 CHICKEN DINNER** - Elimine todos os 139 bots para vencer!
 
-#### 🎁 Loot (`loot.js`)
-- **LootItem**: Items com raridade e efeitos
-- **LootGenerator**: Geração procedural
-- **LootContainer**: Contêineres físicos
-- **Sistema de raridade**: 5 níveis de qualidade
+## 🚀 Tecnologias
 
-#### �️ Mapa (`map.js`)
-- **GameMap**: Mundo principal
-- **Geração procedural**: Casas, terreno, loot
-- **Renderização**: Múltiplas camadas
-- **Minimap**: Representação em escala
+- **HTML5 Canvas** - Renderização 2D
+- **JavaScript ES6+** - Lógica do jogo
+- **CSS3** - Interface e responsividade
+- **Arquitetura orientada a objetos** - Classes para Player, Bots, Armas, etc.
 
-#### 🎮 Game Loop (`game.js`)
-- **Loop principal**: 60 FPS com delta time
-- **Estados**: Menu, jogo, pausa, game over
-- **Câmera**: Seguimento suave do jogador
-- **UI**: HUD, minimap, informações
+## 📱 Compatibilidade
 
-## 🚀 Como Executar
-
-### 💻 Localmente
-1. Clone ou baixe os arquivos
-2. Abra `index.html` em um navegador moderno
-3. O jogo iniciará automaticamente
-
-### 🌐 Servidor Web
-1. Coloque os arquivos em um servidor web
-2. Acesse pelo navegador
-3. Melhor performance que execução local
-
-### 📱 Mobile
-- Suporte básico para dispositivos móveis
-- Detecção automática e otimizações
-- Controles touch em desenvolvimento
-
-## ⚡ Performance
-
-### 🎯 Otimizações
-- **60 FPS**: Loop otimizado com requestAnimationFrame
-- **Delta time**: Movimento independente do framerate
-- **Garbage collection**: Minimização de alocações
-- **Culling**: Renderização apenas do visível
-- **Mobile**: Detecção e otimizações automáticas
-
-### 📊 Monitoramento
-- **FPS counter**: Visível no debug
-- **Performance API**: Métricas detalhadas
-- **Memory usage**: Otimização de memória
-- **Debug tools**: Informações em tempo real
+- ✅ **Desktop** - Chrome, Firefox, Safari, Edge
+- ✅ **Mobile** - Android e iOS (touch otimizado)
+- ✅ **Performance** - 60 FPS estável
+- ✅ **Responsivo** - Adapta a diferentes tamanhos de tela
 
 ## 🎨 Características Visuais
 
@@ -200,7 +155,6 @@ Um jogo de battle royale em 2D com visão top-down, inspirado no Warzone, desenv
 
 ### 🎮 Gameplay
 - [ ] Múltiplos jogadores (multiplayer)
-- [ ] IA para bots inimigos
 - [ ] Mais tipos de armas
 - [ ] Veículos
 - [ ] Granadas e explosivos
@@ -220,7 +174,14 @@ Um jogo de battle royale em 2D com visão top-down, inspirado no Warzone, desenv
 - [ ] Shaders simples
 - [ ] Temas visuais
 
-### � Mobile
+### 🎨 Visual
+- [ ] Sprites customizados
+- [ ] Animações de personagem
+- [ ] Efeitos de iluminação
+- [ ] Shaders simples
+- [ ] Temas visuais
+
+### 🎨 Mobile
 - [ ] Controles touch completos
 - [ ] UI adaptativa
 - [ ] Vibração
@@ -235,21 +196,13 @@ Um jogo de battle royale em 2D com visão top-down, inspirado no Warzone, desenv
 - **Teleporte**: Movimento rápido
 - **Item spawning**: Teste de equipamentos
 
-### � Métricas
-- **FPS em tempo real**
-- **Posição do jogador**
-- **Estado da câmera**
-- **Contadores de objetos**
-- **Timers do jogo**
+### 📊 Monitoramento
+- **FPS counter**: Visível no debug
+- **Performance API**: Métricas detalhadas
+- **Memory usage**: Otimização de memória
+- **Debug tools**: Informações em tempo real
 
 ## 🤝 Contribuindo
-
-### � Como Contribuir
-1. Fork o projeto
-2. Crie sua feature branch
-3. Teste suas mudanças
-4. Faça commit das alterações
-5. Envie um pull request
 
 ### 🎯 Áreas de Contribuição
 - **Bug fixes**: Correção de problemas
@@ -274,4 +227,4 @@ Desenvolvido como um projeto educacional para demonstrar:
 
 ---
 
-**Divirta-se jogando Warzone 2D!** 🎮🏆
+**🎮 Divirta-se sobrevivendo no Warzone 2D! Que a sorte esteja com você no Battle Royale!**

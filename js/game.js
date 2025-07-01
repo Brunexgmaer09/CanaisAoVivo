@@ -19,6 +19,9 @@ class Game {
         const spawnPoint = this.gameMap.getRandomSpawnPoint();
         this.player = new Player(spawnPoint.x, spawnPoint.y);
         
+        // Bots IA
+        this.botManager = new BotManager();
+        
         // Balas
         this.bullets = [];
         
@@ -59,11 +62,15 @@ class Game {
         // Começar zona segura
         this.scheduleZoneShrink();
         
+        // Spawnar bots
+        this.botManager.spawnBots(this.gameMap);
+        
         console.log('Warzone 2D iniciado!');
         console.log(`Jogador spawnou em: ${this.player.x}, ${this.player.y}`);
         console.log(`Mapa: ${this.gameMap.width}x${this.gameMap.height}`);
         console.log(`Casas geradas: ${this.gameMap.houses.length}`);
         console.log(`Loot gerado: ${this.gameMap.lootContainers.length}`);
+        console.log(`🤖 139 Bots IA criados! Battle Royale com 140 jogadores!`);
     }
     
     setupEventListeners() {
@@ -134,6 +141,13 @@ class Game {
             return;
         }
         
+        // Verificar condição de vitória
+        const botStats = this.botManager.getStats();
+        if (botStats.alive === 0 && this.player.isAlive()) {
+            this.victory();
+            return;
+        }
+        
         // Aplicar dano da zona
         this.applyZoneDamage(deltaTime);
         
@@ -145,6 +159,16 @@ class Game {
         
         // Atualizar mapa
         this.gameMap.update(deltaTime);
+        
+        // Atualizar bots
+        this.botManager.update(deltaTime, this.gameMap, this.player, this.bullets);
+        
+        // Adicionar balas dos bots
+        const botBullets = this.botManager.getBotShots(deltaTime);
+        this.bullets.push(...botBullets);
+        
+        // Verificar colisões entre balas e bots/jogador
+        this.botManager.checkBulletCollisions(this.bullets, this.player);
         
         // Atualizar efeitos
         EffectsManager.update(deltaTime);
@@ -261,6 +285,21 @@ class Game {
         if (armorElement) armorElement.textContent = Math.round(this.player.armor);
         if (killsElement) killsElement.textContent = this.player.kills;
         
+        // Atualizar contador de jogadores vivos
+        const stats = this.botManager.getStats();
+        const remainingElement = document.getElementById('remaining');
+        if (remainingElement) {
+            remainingElement.textContent = stats.remaining;
+        } else {
+            // Criar elemento se não existir
+            const hudElement = document.getElementById('hud');
+            if (hudElement) {
+                const remainingDiv = document.createElement('div');
+                remainingDiv.innerHTML = `Restam: <span id="remaining">${stats.remaining}</span>`;
+                hudElement.appendChild(remainingDiv);
+            }
+        }
+        
         const currentWeapon = this.player.getCurrentWeapon();
         if (currentWeapon) {
             if (weaponElement) weaponElement.textContent = currentWeapon.name;
@@ -294,6 +333,9 @@ class Game {
             for (const bullet of this.bullets) {
                 bullet.draw(this.ctx, this.camera);
             }
+            
+            // Desenhar bots
+            this.botManager.draw(this.ctx, this.camera);
             
             // Desenhar jogador
             this.player.draw(this.ctx, this.camera);
@@ -358,6 +400,12 @@ class Game {
     
     drawMinimap() {
         const playerCenter = this.player.getCenter();
+        
+        // Limpar minimap
+        this.minimapCtx.fillStyle = '#1a1a1a';
+        this.minimapCtx.fillRect(0, 0, this.minimapCanvas.width, this.minimapCanvas.height);
+        
+        // Desenhar mapa base
         this.gameMap.drawMinimap(
             this.minimapCtx,
             playerCenter.x,
@@ -365,14 +413,23 @@ class Game {
             this.minimapCanvas.width,
             this.minimapCanvas.height
         );
+        
+        // Desenhar bots no minimap
+        const scaleX = this.minimapCanvas.width / this.gameMap.width;
+        const scaleY = this.minimapCanvas.height / this.gameMap.height;
+        this.botManager.drawMinimap(this.minimapCtx, scaleX, scaleY);
     }
     
     drawDebugInfo() {
+        const botStats = this.botManager.getStats();
         const debugInfo = [
             `FPS: ${this.fps}`,
             `Posição: ${Math.round(this.player.x)}, ${Math.round(this.player.y)}`,
             `Câmera: ${Math.round(this.camera.x)}, ${Math.round(this.camera.y)}`,
             `Balas: ${this.bullets.length}`,
+            `Bots vivos: ${botStats.alive}`,
+            `Eliminações: ${botStats.eliminated}`,
+            `Restam: ${botStats.remaining}`,
             `Loot: ${this.gameMap.lootContainers.filter(l => !l.collected).length}`,
             `Tempo: ${Math.round(this.gameTime)}s`,
             `Vida: ${Math.round(this.player.health)}/${this.player.maxHealth}`,
@@ -380,14 +437,14 @@ class Game {
         ];
         
         this.ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
-        this.ctx.fillRect(10, this.canvas.height - 160, 200, 150);
+        this.ctx.fillRect(10, this.canvas.height - 200, 220, 190);
         
         this.ctx.fillStyle = '#00FF00';
         this.ctx.font = '12px monospace';
         this.ctx.textAlign = 'left';
         
         for (let i = 0; i < debugInfo.length; i++) {
-            this.ctx.fillText(debugInfo[i], 15, this.canvas.height - 145 + i * 15);
+            this.ctx.fillText(debugInfo[i], 15, this.canvas.height - 185 + i * 15);
         }
         
         this.ctx.fillStyle = '#FFFF00';
@@ -422,6 +479,14 @@ class Game {
         this.showGameOverScreen();
     }
     
+    victory() {
+        this.gameState = 'victory';
+        console.log('🏆 CHICKEN DINNER! Você venceu o Battle Royale!');
+        
+        // Mostrar tela de vitória
+        this.showVictoryScreen();
+    }
+    
     showGameOverScreen() {
         this.ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -436,6 +501,25 @@ class Game {
         this.ctx.fillText(`Sobreviveu por ${Math.round(this.gameTime)} segundos`, this.canvas.width / 2, this.canvas.height / 2);
         this.ctx.fillText(`Kills: ${this.player.kills}`, this.canvas.width / 2, this.canvas.height / 2 + 30);
         this.ctx.fillText('Pressione F5 para reiniciar', this.canvas.width / 2, this.canvas.height / 2 + 80);
+    }
+    
+    showVictoryScreen() {
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.9)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        this.ctx.fillStyle = '#FFD700';
+        this.ctx.font = 'bold 48px Arial';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText('🏆 CHICKEN DINNER! 🏆', this.canvas.width / 2, this.canvas.height / 2 - 50);
+        
+        this.ctx.fillStyle = '#FFFFFF';
+        this.ctx.font = '32px Arial';
+        this.ctx.fillText('VOCÊ VENCEU!', this.canvas.width / 2, this.canvas.height / 2);
+        
+        this.ctx.font = '24px Arial';
+        this.ctx.fillText(`Tempo de partida: ${Math.round(this.gameTime)}s`, this.canvas.width / 2, this.canvas.height / 2 + 40);
+        this.ctx.fillText(`Eliminações: ${this.player.kills}`, this.canvas.width / 2, this.canvas.height / 2 + 70);
+        this.ctx.fillText('Pressione F5 para jogar novamente', this.canvas.width / 2, this.canvas.height / 2 + 120);
     }
     
     // Loop principal do jogo
