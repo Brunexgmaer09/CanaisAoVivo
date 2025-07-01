@@ -271,7 +271,14 @@ const SoundManager = {
 const EffectsManager = {
     particles: [],
     
+    init: function() {
+        this.particles = [];
+    },
+    
     addMuzzleFlash: (x, y) => {
+        if (!EffectsManager.particles) {
+            EffectsManager.particles = [];
+        }
         for (let i = 0; i < 5; i++) {
             const angle = Math.random() * Math.PI * 2;
             const speed = MathUtils.random(50, 100);
@@ -285,11 +292,14 @@ const EffectsManager = {
                 MathUtils.random(2, 4)
             );
             
-            this.particles.push(particle);
+            EffectsManager.particles.push(particle);
         }
     },
     
     addBloodSplatter: (x, y) => {
+        if (!EffectsManager.particles) {
+            EffectsManager.particles = [];
+        }
         for (let i = 0; i < 8; i++) {
             const angle = Math.random() * Math.PI * 2;
             const speed = MathUtils.random(30, 80);
@@ -303,21 +313,29 @@ const EffectsManager = {
                 MathUtils.random(1, 3)
             );
             
-            this.particles.push(particle);
+            EffectsManager.particles.push(particle);
         }
     },
     
     update: (deltaTime) => {
-        for (let i = this.particles.length - 1; i >= 0; i--) {
-            this.particles[i].update(deltaTime);
-            if (!this.particles[i].alive) {
-                this.particles.splice(i, 1);
+        if (!EffectsManager.particles) {
+            EffectsManager.particles = [];
+            return;
+        }
+        for (let i = EffectsManager.particles.length - 1; i >= 0; i--) {
+            EffectsManager.particles[i].update(deltaTime);
+            if (!EffectsManager.particles[i].alive) {
+                EffectsManager.particles.splice(i, 1);
             }
         }
     },
     
     draw: (ctx, camera) => {
-        this.particles.forEach(particle => {
+        if (!EffectsManager.particles) {
+            EffectsManager.particles = [];
+            return;
+        }
+        EffectsManager.particles.forEach(particle => {
             particle.draw(ctx, camera);
         });
     }

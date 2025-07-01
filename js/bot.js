@@ -23,7 +23,7 @@ class Bot extends GameObject {
         
         // Combate
         this.weapons = [
-            new Weapon('Pistola', 25, 0.3, 250, 15, 60),
+            Weapon.createPistol(),
             null,
             null
         ];
@@ -668,13 +668,29 @@ class Bot extends GameObject {
         // Procurar slot vazio ou substituir pistola
         for (let i = 0; i < this.weapons.length; i++) {
             if (!this.weapons[i] || this.weapons[i].name === 'Pistola') {
-                this.weapons[i] = new Weapon(
-                    weaponData.name,
-                    weaponData.damage,
-                    weaponData.fireRate,
-                    weaponData.range,
-                    weaponData.maxAmmo
-                );
+                // Criar arma baseada no nome
+                let newWeapon;
+                switch(weaponData.name || weaponData) {
+                    case 'SMG':
+                        newWeapon = Weapon.createSMG();
+                        break;
+                    case 'Rifle de Assalto':
+                        newWeapon = Weapon.createAssaultRifle();
+                        break;
+                    case 'Shotgun':
+                        newWeapon = Weapon.createShotgun();
+                        break;
+                    case 'Sniper':
+                        newWeapon = Weapon.createSniper();
+                        break;
+                    case 'LMG':
+                        newWeapon = Weapon.createLMG();
+                        break;
+                    default:
+                        newWeapon = Weapon.createPistol();
+                }
+                
+                this.weapons[i] = newWeapon;
                 this.currentWeaponIndex = i;
                 return true;
             }

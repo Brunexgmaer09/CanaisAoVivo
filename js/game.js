@@ -12,6 +12,9 @@ class Game {
         this.input = new InputManager();
         this.gameMap = new GameMap();
         
+        // Inicializar sistemas de efeitos
+        EffectsManager.init();
+        
         // Camera
         this.camera = { x: 0, y: 0 };
         
