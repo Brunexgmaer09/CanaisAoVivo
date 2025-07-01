@@ -34,7 +34,7 @@ class Game {
         this.gameTime = 0;
         
         // Battle Royale
-        this.zoneTimer = 120; // 2 minutos até primeira zona
+        this.zoneTimer = 300; // 5 minutos até primeira zona
         this.zonePhase = 0;
         this.maxZonePhases = 6;
         
@@ -194,7 +194,9 @@ class Game {
     }
     
     scheduleZoneShrink() {
-        this.zoneTimer = 120; // 2 minutos
+        // Aumentar tempo entre fases da zona
+        const zoneTimers = [300, 240, 180, 120, 90, 60]; // 5min, 4min, 3min, 2min, 1.5min, 1min
+        this.zoneTimer = zoneTimers[this.zonePhase] || 60;
     }
     
     triggerZoneShrink() {
@@ -204,7 +206,7 @@ class Game {
             const zoneReduction = 0.8; // Reduzir para 80% do tamanho atual
             const currentRadius = this.gameMap.safeZone.currentRadius;
             const newRadius = currentRadius * zoneReduction;
-            const shrinkDuration = 60; // 1 minuto para se fechar
+            const shrinkDuration = 90; // 1.5 minutos para se fechar
             
             this.gameMap.startZoneShrinking(newRadius, shrinkDuration);
             

@@ -30,13 +30,18 @@ class Bot extends GameObject {
         this.currentWeaponIndex = 0;
         this.target = null;
         this.lastShotTime = 0;
-        this.detectionRange = MathUtils.random(200, 350);
-        this.shootingAccuracy = MathUtils.random(0.6, 0.9);
+        this.detectionRange = MathUtils.random(100, 200); // Reduzido alcance de detecção
+        this.shootingAccuracy = MathUtils.random(0.3, 0.7); // Reduzida precisão
         
         // Estados da IA
         this.state = 'explore'; // 'explore', 'loot', 'combat', 'flee', 'zone'
         this.lastStateChange = 0;
         this.personality = this.generatePersonality();
+        
+        // Fazer bots menos agressivos no início
+        this.aggressionMultiplier = MathUtils.random(0.2, 0.6);
+        this.initialCalmPeriod = MathUtils.random(60, 180); // 1-3 minutos de período calmo
+        this.earlyGamePeriod = MathUtils.random(120, 300); // 2-5 minutos de early game
         
         // Navegação
         this.path = [];
@@ -77,12 +82,12 @@ class Bot extends GameObject {
     
     generatePersonality() {
         return {
-            aggression: MathUtils.random(0.3, 1.0),     // Quão agressivo
-            caution: MathUtils.random(0.2, 0.8),        // Quão cauteloso
-            lootGreed: MathUtils.random(0.4, 1.0),      // Foco em loot
+            aggression: MathUtils.random(0.1, 0.6),     // Menos agressivo
+            caution: MathUtils.random(0.4, 0.9),        // Mais cauteloso
+            lootGreed: MathUtils.random(0.6, 1.0),      // Mais foco em loot
             teamwork: MathUtils.random(0.1, 0.6),       // Tendência a agrupar
-            accuracy: MathUtils.random(0.5, 0.95),      // Precisão nos tiros
-            reactionTime: MathUtils.random(0.2, 0.8)    // Tempo de reação
+            accuracy: MathUtils.random(0.2, 0.6),       // Menor precisão
+            reactionTime: MathUtils.random(0.5, 1.5)    // Reação mais lenta
         };
     }
     
@@ -173,20 +178,55 @@ class Bot extends GameObject {
     decideState(gameMap, player, otherBots) {
         const center = this.getCenter();
         
+        // Período inicial calmo - focar em loot e exploração
+        if (this.timeAlive < this.initialCalmPeriod) {
+            // Durante período calmo, só atacar se for atacado ou muito próximo
+            const nearbyEnemy = this.findNearestEnemy(player, otherBots);
+            if (nearbyEnemy && this.getDistanceTo(nearbyEnemy) < 50) {
+                if (this.health < 50) {
+                    this.setState('flee');
+                    return;
+                }
+            }
+            
+            // Priorizar loot durante período calmo
+            if (this.needsLoot() && this.knownLoot.length > 0) {
+                this.setState('loot');
+                return;
+            }
+            
+            this.setState('explore');
+            return;
+        }
+        
         // Prioridade 1: Zona de dano
         if (!gameMap.isInSafeZone(center.x, center.y)) {
             this.setState('zone');
             return;
         }
         
-        // Prioridade 2: Combate se inimigo próximo
+        // Prioridade 2: Combate se inimigo próximo (com chance baseada na personalidade)
         const nearbyEnemy = this.findNearestEnemy(player, otherBots);
         if (nearbyEnemy && this.getDistanceTo(nearbyEnemy) < this.detectionRange) {
-            if (this.health < 30 && this.personality.caution > 0.6) {
+            let currentAggression = this.personality.aggression * this.aggressionMultiplier;
+            
+            // Durante early game, ser ainda menos agressivo
+            if (this.timeAlive < this.earlyGamePeriod) {
+                currentAggression *= 0.3; // 30% da agressividade normal
+            }
+            
+            if (this.health < 40 && this.personality.caution > 0.5) {
                 this.setState('flee');
-            } else if (this.personality.aggression > 0.5) {
+            } else if (Math.random() < currentAggression * 0.5) { // Reduzido de 70% para 50%
                 this.setState('combat');
                 this.target = nearbyEnemy;
+            } else {
+                // Na maioria das vezes ignorar inimigos e continuar explorando/coletando
+                if (this.needsLoot() && this.knownLoot.length > 0) {
+                    this.setState('loot');
+                } else {
+                    this.setState('explore');
+                }
             }
             return;
         }
@@ -380,10 +420,16 @@ class Bot extends GameObject {
             
             if (distance < weapon.range && this.hasLineOfSight(this.target)) {
                 const timeSinceLastShot = Date.now() - this.lastShotTime;
-                const fireRate = weapon.fireRate * 1000 * (2 - this.personality.aggression);
+                const fireRate = weapon.fireRate * 1000 * (3 - this.personality.aggression); // Mais lento para atirar
                 
-                if (timeSinceLastShot >= fireRate) {
-                    this.shoot();
+                // Adicionar delay de reação baseado na personalidade
+                const reactionDelay = this.personality.reactionTime * 1000;
+                
+                if (timeSinceLastShot >= fireRate + reactionDelay) {
+                    // Chance de errar o tiro ou não atirar
+                    if (Math.random() < 0.7) { // 70% de chance de atirar
+                        this.shoot();
+                    }
                 }
             }
         }
@@ -403,8 +449,8 @@ class Bot extends GameObject {
         const distanceAccuracy = 1 - (distance / maxRange) * 0.5;
         const finalAccuracy = this.personality.accuracy * distanceAccuracy;
         
-        // Aplicar imprecisão
-        const spread = (1 - finalAccuracy) * MathUtils.degToRad(20);
+        // Aplicar imprecisão (maior dispersão)
+        const spread = (1 - finalAccuracy) * MathUtils.degToRad(35); // Aumentado de 20° para 35°
         const baseAngle = MathUtils.angleBetween(
             this.x + this.width / 2, this.y + this.height / 2,
             targetCenter.x, targetCenter.y
@@ -415,10 +461,13 @@ class Bot extends GameObject {
         const bulletX = this.x + this.width / 2 + Math.cos(shotAngle) * 15;
         const bulletY = this.y + this.height / 2 + Math.sin(shotAngle) * 15;
         
+        // Reduzir dano dos bots para combates mais longos
+        const reducedDamage = weapon.damage * 0.6; // 60% do dano original
+        
         const bullet = new Bullet(
             bulletX, bulletY, shotAngle,
             weapon.bulletSpeed || 800,
-            weapon.damage, weapon.range, this
+            reducedDamage, weapon.range, this
         );
         
         // Efeitos
@@ -876,10 +925,21 @@ class BotManager {
         console.log('Spawning 139 bots...');
         
         for (let i = 0; i < this.maxBots; i++) {
-            const spawnPoint = gameMap.getRandomSpawnPoint();
+            // Spawn mais distribuído pelo mapa
+            let spawnPoint;
+            let attempts = 0;
+            
+            do {
+                spawnPoint = {
+                    x: MathUtils.random(100, gameMap.width - 100),
+                    y: MathUtils.random(100, gameMap.height - 100)
+                };
+                attempts++;
+            } while (this.isSpawnPointTooClose(spawnPoint) && attempts < 10);
+            
             const bot = new Bot(spawnPoint.x, spawnPoint.y, i + 1);
             
-            // Dar equipamento inicial variado
+            // Dar equipamento inicial variado (menos armas no início)
             this.giveInitialLoadout(bot);
             
             this.bots.push(bot);
@@ -890,17 +950,34 @@ class BotManager {
         console.log(`${this.spawnedBots} bots spawned successfully!`);
     }
     
+    isSpawnPointTooClose(newPoint) {
+        const minDistance = 150; // Distância mínima entre bots
+        
+        for (const bot of this.bots) {
+            const distance = MathUtils.distance(
+                newPoint.x, newPoint.y,
+                bot.x, bot.y
+            );
+            
+            if (distance < minDistance) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     giveInitialLoadout(bot) {
-        // 30% chance de começar com arma melhor
-        if (Math.random() < 0.3) {
-            const weapons = ['SMG', 'Rifle de Assalto', 'Shotgun'];
+        // Reduzir chance de arma melhor no início (10% ao invés de 30%)
+        if (Math.random() < 0.1) {
+            const weapons = ['SMG', 'Rifle de Assalto'];
             const weaponName = MathUtils.randomChoice(weapons);
             bot.addWeapon({ name: weaponName });
         }
         
-        // Chance de armadura inicial
-        if (Math.random() < 0.2) {
-            bot.armor = MathUtils.randomInt(25, 50);
+        // Reduzir chance de armadura inicial (5% ao invés de 20%)
+        if (Math.random() < 0.05) {
+            bot.armor = MathUtils.randomInt(10, 25);
         }
     }
     
