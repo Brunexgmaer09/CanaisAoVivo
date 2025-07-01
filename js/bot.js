@@ -220,7 +220,10 @@ class Bot extends GameObject {
         // Ir para o loot mais próximo
         const nearestLoot = this.findNearestLoot();
         if (nearestLoot) {
-            this.targetPosition = new Vector2(nearestLoot.x, nearestLoot.y);
+            this.targetPosition = {
+                x: nearestLoot.x + nearestLoot.width / 2,
+                y: nearestLoot.y + nearestLoot.height / 2
+            };
         } else {
             this.setState('explore');
         }
@@ -240,7 +243,11 @@ class Bot extends GameObject {
             
             if (distance > optimalRange) {
                 // Aproximar
-                this.targetPosition = this.target.getCenter();
+                const targetCenter = this.target.getCenter();
+                this.targetPosition = {
+                    x: targetCenter.x,
+                    y: targetCenter.y
+                };
             } else if (distance < optimalRange * 0.5) {
                 // Afastar mantendo linha de visão
                 this.targetPosition = this.calculateFlankPosition(this.target);
@@ -256,8 +263,17 @@ class Bot extends GameObject {
         // Fugir do inimigo mais próximo
         const nearestEnemy = this.findNearestEnemy(player, otherBots);
         if (nearestEnemy) {
-            const fleeDirection = this.getCenter().subtract(nearestEnemy.getCenter()).normalize();
-            this.targetPosition = this.getCenter().add(fleeDirection.multiply(300));
+            const myCenter = this.getCenter();
+            const enemyCenter = nearestEnemy.getCenter();
+            const fleeDirection = new Vector2(
+                myCenter.x - enemyCenter.x,
+                myCenter.y - enemyCenter.y
+            ).normalize();
+            
+            this.targetPosition = {
+                x: myCenter.x + fleeDirection.x * 300,
+                y: myCenter.y + fleeDirection.y * 300
+            };
         }
         
         // Voltar para combate se recuperou vida
@@ -273,7 +289,10 @@ class Bot extends GameObject {
         
         if (safeZone) {
             const directionToSafe = new Vector2(safeZone.centerX - center.x, safeZone.centerY - center.y).normalize();
-            this.targetPosition = center.add(directionToSafe.multiply(200));
+            this.targetPosition = {
+                x: center.x + directionToSafe.x * 200,
+                y: center.y + directionToSafe.y * 200
+            };
         }
     }
     
@@ -281,7 +300,10 @@ class Bot extends GameObject {
         if (!this.targetPosition) return;
         
         const currentPos = this.getCenter();
-        const direction = this.targetPosition.subtract(currentPos).normalize();
+        const direction = new Vector2(
+            this.targetPosition.x - currentPos.x,
+            this.targetPosition.y - currentPos.y
+        ).normalize();
         
         // Verificar se está travado
         const distanceMoved = currentPos.distance(this.lastPosition);
@@ -530,7 +552,10 @@ class Bot extends GameObject {
         if (!this.targetPosition) return true;
         
         const center = this.getCenter();
-        const distance = center.distance(this.targetPosition);
+        const distance = MathUtils.distance(
+            center.x, center.y,
+            this.targetPosition.x, this.targetPosition.y
+        );
         return distance < 30;
     }
     
@@ -542,10 +567,10 @@ class Bot extends GameObject {
         
         if (unvisitedHouses.length > 0 && Math.random() < this.personality.lootGreed) {
             const house = MathUtils.randomChoice(unvisitedHouses);
-            this.targetPosition = new Vector2(
-                house.x + house.width / 2,
-                house.y + house.height / 2
-            );
+            this.targetPosition = {
+                x: house.x + house.width / 2,
+                y: house.y + house.height / 2
+            };
             this.visitedHouses.push(house);
         } else {
             // Posição aleatória na zona segura
@@ -553,10 +578,10 @@ class Bot extends GameObject {
             if (safeZone) {
                 const angle = Math.random() * Math.PI * 2;
                 const radius = Math.random() * safeZone.currentRadius * 0.8;
-                this.targetPosition = new Vector2(
-                    safeZone.centerX + Math.cos(angle) * radius,
-                    safeZone.centerY + Math.sin(angle) * radius
-                );
+                this.targetPosition = {
+                    x: safeZone.centerX + Math.cos(angle) * radius,
+                    y: safeZone.centerY + Math.sin(angle) * radius
+                };
             }
         }
     }
@@ -579,25 +604,35 @@ class Bot extends GameObject {
             }
             
             if (valid) {
-                return testPos;
+                return { x: testPos.x, y: testPos.y };
             }
         }
         
         // Se nenhuma posição válida, mover aleatoriamente
         const randomAngle = Math.random() * Math.PI * 2;
-        return center.add(Vector2.fromAngle(randomAngle, 150));
+        const direction = Vector2.fromAngle(randomAngle, 150);
+        return {
+            x: center.x + direction.x,
+            y: center.y + direction.y
+        };
     }
     
     calculateFlankPosition(target) {
         const targetCenter = target.getCenter();
         const myCenter = this.getCenter();
-        const direction = myCenter.subtract(targetCenter).normalize();
+        const direction = new Vector2(
+            myCenter.x - targetCenter.x,
+            myCenter.y - targetCenter.y
+        ).normalize();
         
         // Calcular posição de flanco perpendicular
         const perpendicular = new Vector2(-direction.y, direction.x);
         const flankDirection = Math.random() < 0.5 ? perpendicular : perpendicular.multiply(-1);
         
-        return myCenter.add(flankDirection.multiply(100));
+        return {
+            x: myCenter.x + flankDirection.x * 100,
+            y: myCenter.y + flankDirection.y * 100
+        };
     }
     
     getCurrentWeapon() {
