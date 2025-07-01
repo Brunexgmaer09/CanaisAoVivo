@@ -4,71 +4,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assista seus canais favoritos ao vivo!</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <meta name="description" content="Assista TNT Sports, Megapix, Space e outros canais ao vivo. Site feito por Brunex.">
-    <meta name="keywords" content="TNT Sports, Megapix, Space, Telecine, HBO, Canais ao vivo, Brunex">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2322986201594913"
-        crossorigin="anonymous"></script>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Warzone 2D - Battle Royale</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #1a1a1a;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        #gameCanvas {
+            border: 2px solid #333;
+            background: #2d5a27;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+        
+        .game-container {
+            position: relative;
+        }
+        
+        .hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 14px;
+            z-index: 100;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        
+        .minimap {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 150px;
+            height: 150px;
+            border: 2px solid #fff;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            color: white;
+            font-size: 12px;
+            z-index: 100;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            z-index: 1000;
+        }
+        
+        .crosshair {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+        }
+        
+        .crosshair::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 2px;
+            background: white;
+            transform: translate(-50%, -50%);
+        }
+        
+        .crosshair::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 8px;
+            background: white;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
-    <div id="ambient-background"></div>
-    <div class="player-section">
-        <div class="video-container" id="video-container" style="display: none;">
-            <div class="video-background"></div>
-            <div class="loading-overlay">
-                <div class="loading-spinner"></div>
-            </div>
-            <iframe 
-                id="iframe-video" 
-                allow="encrypted-media; autoplay; fullscreen; picture-in-picture" 
-                allowfullscreen="true"
-                webkitallowfullscreen="true" 
-                mozallowfullscreen="true"
-                frameborder="0" 
-                width="100%" 
-                height="600"
-                style="pointer-events: auto;"
-            ></iframe>
+    <div class="game-container">
+        <canvas id="gameCanvas" width="1200" height="800"></canvas>
+        <div class="crosshair" id="crosshair"></div>
+        
+        <div class="hud" id="hud">
+            <div>Vida: <span id="health">100</span></div>
+            <div>Armadura: <span id="armor">0</span></div>
+            <div>Munição: <span id="ammo">30/90</span></div>
+            <div>Arma: <span id="weapon">Rifle de Assalto</span></div>
+            <div>Kills: <span id="kills">0</span></div>
         </div>
-        <div class="program-info"></div>
-    </div>
-    <div class="text-container">
-        <h3 class="message">Assista seus canais favoritos ao vivo!</h3>
-        <p class="author-container">
-            <span class="smoke-text" id="smoke-text"></span>
-        </p>
-    </div>
-    <div class="container">
-        <button class="channel-button" data-channel="tntsports">TNT Sports</button>
-        <button class="channel-button" data-channel="megapix">Megapix</button>
-        <button class="channel-button" data-channel="space">Space</button>
-        <button class="channel-button" data-channel="telecineaction">Telecine Action</button>
-        <button class="channel-button" data-channel="telecinetouch">Telecine Touch</button>
-        <button class="channel-button" data-channel="telecinepremium">Telecine Premium</button>
-        <button class="channel-button" data-channel="hbo">HBO</button>
-        <button class="channel-button" data-channel="hboplus">HBO Plus</button>
-        <button class="channel-button" data-channel="fx">FX</button>
-        <button class="channel-button" data-channel="globomg">Globo Minas</button>
-    </div>
-    <div class="ambient-mode-container">
-        <span class="light-icon">💡</span>
-        <span>Modo Ambiente</span>
-        <label class="switch">
-            <input type="checkbox" id="ambient-mode-toggle">
-            <span class="slider round"></span>
-        </label>
-    </div>
-    <div class="contador-container">
-        <span>Pessoas Online: </span>
-        <div align="center">
-            <a title='Contador de Visitas do MegaContador' href='https://megacontador.com.br/'>
-                <img src='https://megacontador.com.br/img-xAgj5K3nGHJb0DfB-48.gif' border='0' alt='Contador de visitas'>
-            </a>
+        
+        <canvas class="minimap" id="minimap" width="150" height="150"></canvas>
+        
+        <div class="controls">
+            <div>WASD - Mover | Mouse - Mirar | Click Esquerdo - Atirar</div>
+            <div>Click Direito - Mira | E - Coletar loot | R - Recarregar</div>
+            <div>1, 2, 3 - Trocar arma | ESC - Pausar</div>
         </div>
+        
+        <div class="loading" id="loading">Carregando Warzone 2D...</div>
     </div>
-    <script type="module" src="js/main.js"></script>
+
+    <!-- Scripts do jogo -->
+    <script src="js/utils.js"></script>
+    <script src="js/gameObjects.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/weapons.js"></script>
+    <script src="js/loot.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
