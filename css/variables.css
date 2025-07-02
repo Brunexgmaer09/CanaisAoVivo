@@ -1,18 +1,58 @@
 /* css/variables.css */
 :root {
-    --primary-color: #7c3aed;
+    /* Cores primárias mais vibrantes */
+    --primary-color: #8b5cf6;
     --secondary-color: #06b6d4;
-    --background-color: #030712;
-    --surface-color: rgba(255, 255, 255, 0.07);
+    --accent-color: #f59e0b;
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    
+    /* Background com gradiente mais rico */
+    --background-color: #0f0f23;
+    --surface-color: rgba(255, 255, 255, 0.08);
+    --surface-hover: rgba(255, 255, 255, 0.12);
     --on-surface-color: #ffffff;
+    
+    /* Textos */
     --text-primary: rgba(255, 255, 255, 0.95);
     --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    
+    /* Gradientes atualizados */
     --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    --glass-background: rgba(255, 255, 255, 0.05);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+    --gradient-secondary: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    --gradient-rainbow: linear-gradient(90deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ffbe0b);
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    
+    /* Novos efeitos visuais */
+    --glass-background: rgba(255, 255, 255, 0.06);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.15);
+    --glass-hover: rgba(255, 255, 255, 0.1);
+    
+    /* Transições mais suaves */
     --transition-speed: 0.3s;
-    --border-radius: 16px;
+    --transition-fast: 0.15s;
+    --transition-slow: 0.6s;
+    
+    /* Bordas e sombras aprimoradas */
+    --border-radius: 20px;
+    --border-radius-small: 12px;
+    --border-radius-large: 24px;
+    
     --box-shadow: 
-        0 8px 32px 0 rgba(0, 0, 0, 0.36),
-        0 2px 8px 0 rgba(0, 0, 0, 0.48);
+        0 10px 40px 0 rgba(0, 0, 0, 0.4),
+        0 4px 16px 0 rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    
+    --box-shadow-hover: 
+        0 15px 50px 0 rgba(0, 0, 0, 0.5),
+        0 8px 20px 0 rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    
+    --glow-primary: 0 0 20px rgba(139, 92, 246, 0.5);
+    --glow-secondary: 0 0 20px rgba(6, 182, 212, 0.5);
+    
+    /* Novos efeitos de backdrop */
+    --backdrop-blur: blur(20px);
+    --backdrop-blur-strong: blur(30px);
 }

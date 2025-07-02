@@ -36,22 +36,22 @@
         <div class="program-info"></div>
     </div>
     <div class="text-container">
-        <h3 class="message">Assista seus canais favoritos ao vivo!</h3>
+        <h3 class="message" data-text="Assista seus canais favoritos ao vivo!">Assista seus canais favoritos ao vivo!</h3>
         <p class="author-container">
             <span class="smoke-text" id="smoke-text"></span>
         </p>
     </div>
     <div class="container">
-        <button class="channel-button" data-channel="tntsports">TNT Sports</button>
-        <button class="channel-button" data-channel="megapix">Megapix</button>
-        <button class="channel-button" data-channel="space">Space</button>
-        <button class="channel-button" data-channel="telecineaction">Telecine Action</button>
-        <button class="channel-button" data-channel="telecinetouch">Telecine Touch</button>
-        <button class="channel-button" data-channel="telecinepremium">Telecine Premium</button>
-        <button class="channel-button" data-channel="hbo">HBO</button>
-        <button class="channel-button" data-channel="hboplus">HBO Plus</button>
-        <button class="channel-button" data-channel="fx">FX</button>
-        <button class="channel-button" data-channel="globomg">Globo Minas</button>
+        <button class="channel-button ripple" data-channel="tntsports">TNT Sports</button>
+        <button class="channel-button ripple" data-channel="megapix">Megapix</button>
+        <button class="channel-button ripple" data-channel="space">Space</button>
+        <button class="channel-button ripple" data-channel="telecineaction">Telecine Action</button>
+        <button class="channel-button ripple" data-channel="telecinetouch">Telecine Touch</button>
+        <button class="channel-button ripple" data-channel="telecinepremium">Telecine Premium</button>
+        <button class="channel-button ripple" data-channel="hbo">HBO</button>
+        <button class="channel-button ripple" data-channel="hboplus">HBO Plus</button>
+        <button class="channel-button ripple" data-channel="fx">FX</button>
+        <button class="channel-button ripple" data-channel="globomg">Globo Minas</button>
     </div>
     <div class="ambient-mode-container">
         <span class="light-icon">💡</span>
@@ -69,6 +69,71 @@
             </a>
         </div>
     </div>
+    <!-- Elementos de UI Extras -->
+    <div class="scroll-indicator"></div>
+    <div class="custom-cursor"></div>
+    <div class="back-to-top" id="backToTop"></div>
+    
+    <!-- Loader de Página -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">Carregando Canais...</div>
+        </div>
+    </div>
+
     <script type="module" src="js/main.js"></script>
+    <script>
+        // Script para efeitos visuais básicos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adicionar classe fade-in-page ao body
+            document.body.classList.add('fade-in-page');
+            
+            // Esconder loader após carregamento
+            setTimeout(() => {
+                const loader = document.getElementById('pageLoader');
+                if (loader) {
+                    loader.classList.add('hidden');
+                }
+            }, 1500);
+            
+            // Cursor personalizado
+            const cursor = document.querySelector('.custom-cursor');
+            if (cursor) {
+                document.addEventListener('mousemove', (e) => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                });
+            }
+            
+            // Indicador de scroll
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            if (scrollIndicator) {
+                window.addEventListener('scroll', () => {
+                    const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                    scrollIndicator.style.width = scrolled + '%';
+                });
+            }
+            
+            // Botão voltar ao topo
+            const backToTop = document.getElementById('backToTop');
+            if (backToTop) {
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > 300) {
+                        backToTop.classList.add('visible');
+                    } else {
+                        backToTop.classList.remove('visible');
+                    }
+                });
+                
+                backToTop.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
